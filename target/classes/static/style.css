@@ -1,0 +1,7 @@
+body {
+    color: #1717b6;
+}
+select {
+    word-wrap: normal;
+    max-width: 50%;
+}
