@@ -1,6 +1,7 @@
 package com.itcube.journal.controller;
 
 import com.itcube.journal.domain.Groups;
+import com.itcube.journal.domain.Marks;
 import com.itcube.journal.domain.Students;
 import com.itcube.journal.repos.AttendanceDatesRepo;
 import com.itcube.journal.repos.AttendanceRepo;
@@ -44,7 +45,8 @@ public class AttendanceController {
 
         model.addAttribute("attendance",attendanceRepo.findAll());
         model.addAttribute("dates", attendanceDatesRepo.findAll());
-        model.addAttribute("groups",groupsRepo.findAll());
+        model.addAttribute("studentMarks", Marks.values());
+//        model.addAttribute("groups",groupsRepo.findAll());
         model.addAttribute("students", studentsByGroup);
         model.addAttribute("filterStudentsByGroup", filter);
 

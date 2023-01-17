@@ -3,6 +3,9 @@ package com.itcube.journal.domain;
 import javax.persistence.*;
 import java.util.Set;
 
+// TODO: Попробовать сделать фильтрацию dropdown все это на одной какой-то странице как (Список пользователей)
+// То, что натыкают в этих dropdown потом сохраниться в таблице с посещаемостью
+
 @Entity
 @Table(name = "attendance")
 public class Attendance {

@@ -55,10 +55,10 @@
                         <td class="text-center">${attend.id}</td>
                         <td class="text-justify">${attend.students}</td>
                         <td class="text-center">
-                            <#list attend.mark as mark>${mark}<#sep>, </#list>
+                            <#list attend.mark as mark>${mark}<#sep>,</#list>
                         </td>
                         <#--                <td><#list user.roles as role>${role}<#sep>, </#list></td>-->
-                        <td class="text-center"><a href="/student/${attend.id}">edit</a></td>
+<#--                        <td class="text-center"><a href="/student/${attend.id}">edit</a></td>-->
                     </tr>
                 </#list>
             </tbody>

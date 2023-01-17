@@ -1,14 +1,14 @@
 package com.itcube.journal.domain;
 
 public enum Marks {
-    Absent("Н");
+    ABSENT("Н");
 
-    private String title;
+    private final String TITLE;
     Marks(String title) {
-        this.title = title;
+        this.TITLE = title;
     }
 
-    public String getTitle() {
-        return title;
+    public String getTITLE() {
+        return TITLE;
     }
 }
