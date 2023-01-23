@@ -1,6 +1,7 @@
 package com.itcube.journal.controller;
 
-import com.itcube.journal.domain.Groups;
+import com.itcube.journal.domain.Attendance;
+import com.itcube.journal.domain.AttendanceDates;
 import com.itcube.journal.domain.Marks;
 import com.itcube.journal.domain.Students;
 import com.itcube.journal.repos.AttendanceDatesRepo;
@@ -10,12 +11,12 @@ import com.itcube.journal.repos.StudentsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/attendance")
@@ -53,4 +54,42 @@ public class AttendanceController {
         return "attendance";
     }
 
+    @GetMapping("{attendance}")
+    public String attendanceEditForm(@PathVariable Attendance attendance, Model model) {
+        Iterable<AttendanceDates> dates = attendanceDatesRepo.findAll();
+        Iterable<Attendance> attendanceMarks = attendanceRepo.findAll();
+
+        model.addAttribute("attendance", attendance);
+        model.addAttribute("attendanceMarks", attendanceMarks);
+        model.addAttribute("marks", Marks.values());
+        model.addAttribute("dates", dates);
+
+        return "attendanceEdit";
+    }
+
+    @PostMapping
+    public String attendanceSave(
+            @RequestParam Map<String, String> form,
+//            AttendanceDates date,
+            @RequestParam("attendanceId") Attendance attendance)
+    {
+//        attendance.setDate(date);
+        System.out.println(attendance.getDate());
+
+        Set<String> marks = Arrays.stream(Marks.values())
+                .map(Marks::name)
+                .collect(Collectors.toSet());
+
+        attendance.getMark().clear();
+
+        for(String key : form.keySet()) {
+            if(marks.contains(key)) {
+                attendance.getMark().add(Marks.valueOf(key));
+            }
+        }
+
+        attendanceRepo.save(attendance);
+
+        return "redirect:/attendance";
+    }
 }
