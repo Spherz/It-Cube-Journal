@@ -1,5 +1,6 @@
 package com.itcube.journal.controller;
 
+import com.google.gson.Gson;
 import com.itcube.journal.domain.Role;
 import com.itcube.journal.domain.User;
 import com.itcube.journal.repos.UserRepo;
@@ -27,6 +28,13 @@ public class UserController {
 
         return "userList";
     }
+
+//    @ResponseBody
+//    @GetMapping("{id}")
+//    public String loadUsersById(@PathVariable("id") Integer id) {
+//        Gson gson = new Gson();
+//        return gson.toJson(userRepo.findById(id));
+//    }
 
     @GetMapping("{user}")
     public String userEditForm(@PathVariable User user, Model model) {

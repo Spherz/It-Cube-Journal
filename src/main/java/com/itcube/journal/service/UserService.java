@@ -9,6 +9,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class UserService implements UserDetailsService {
     @Autowired
@@ -17,6 +20,8 @@ public class UserService implements UserDetailsService {
 //    @Autowired
 //    private PasswordEncoder passwordEncoder;
 
+    List<User> users;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepo.findByUsername(username);
@@ -24,6 +29,16 @@ public class UserService implements UserDetailsService {
 
     public UserDetails loadByStaffSurname(String staffSurname) throws UsernameNotFoundException {
         return userRepo.findByStaff_Surname(staffSurname);
+    }
+
+    public List<User> findByUserNameOrEmail(String username) {
+
+        List<User> result = users.stream()
+                .filter(x -> x.getUsername().equalsIgnoreCase(username))
+                .collect(Collectors.toList());
+
+        return result;
+
     }
 
     public User findOne(String username) {

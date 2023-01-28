@@ -7,12 +7,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="It-Cube-Journal-master" />
+        <module name="It-Cube-Journal" />
         <module name="ItCubeJournal" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="It-Cube-Journal" options="-parameters" />
       <module name="It-Cube-Journal-master" options="-parameters" />
       <module name="ItCubeJournal" options="-parameters" />
     </option>

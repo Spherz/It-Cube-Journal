@@ -10,6 +10,8 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
     User findByStaff_Surname(String staffSurname);
 
+    List<User> findById(Integer id);
+
     User findByStaffTeacherGroupsGroupName(String groupName);
 
     User findByThemeNameThemeName(String themeName);
