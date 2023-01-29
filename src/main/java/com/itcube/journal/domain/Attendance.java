@@ -11,7 +11,7 @@ import java.util.Set;
 public class Attendance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_student")
@@ -34,7 +34,7 @@ public class Attendance {
 
     }
 
-    public Attendance(Long id, Students students, Groups groups, AttendanceDates date, String mark) {
+    public Attendance(Integer id, Students students, Groups groups, AttendanceDates date, String mark) {
         this.id = id;
         this.students = students;
         this.groups = groups;
@@ -42,11 +42,11 @@ public class Attendance {
     }
 
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

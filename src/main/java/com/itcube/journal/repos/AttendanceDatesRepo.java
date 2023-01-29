@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface AttendanceDatesRepo extends CrudRepository<AttendanceDates, Long> {
-    List<AttendanceDates> findById(Integer id);
+public interface AttendanceDatesRepo extends CrudRepository<AttendanceDates, Integer> {
+//    List<AttendanceDates> findById(Integer id);
 }

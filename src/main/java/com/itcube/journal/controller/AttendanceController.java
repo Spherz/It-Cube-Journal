@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
@@ -36,19 +37,18 @@ public class AttendanceController {
 
     @GetMapping
     public String attendanceList(Model model, @RequestParam(required = false, defaultValue = "") String filter) {
-        Iterable<Students> studentsByGroup;
+        Iterable<Attendance> studentsByGroup;
 
         if(filter != null && !filter.isEmpty()) {
-            studentsByGroup = studentsRepo.findByNameGroup_GroupName(filter);
+            studentsByGroup = attendanceRepo.findByGroups_GroupName(filter);
+            System.out.println(filter);
         } else {
-            studentsByGroup = studentsRepo.findAll();
+            studentsByGroup = attendanceRepo.findAll();
         }
 
-        model.addAttribute("attendance",attendanceRepo.findAll());
+        model.addAttribute("attendance", studentsByGroup);
         model.addAttribute("dates", attendanceDatesRepo.findAll());
         model.addAttribute("studentMarks", Marks.values());
-//        model.addAttribute("groups",groupsRepo.findAll());
-        model.addAttribute("students", studentsByGroup);
         model.addAttribute("filterStudentsByGroup", filter);
 
         return "attendance";
@@ -70,7 +70,7 @@ public class AttendanceController {
     @PostMapping
     public String attendanceSave(
             @RequestParam Map<String, String> form,
-//            AttendanceDates date,
+            @RequestParam("dateId") AttendanceDates date,
             @RequestParam("attendanceId") Attendance attendance)
     {
 //        attendance.setDate(date);

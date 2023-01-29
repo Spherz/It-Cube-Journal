@@ -95,7 +95,7 @@
 <#--        </div>-->
 
 <#--        <div class="dropdown mt-3">-->
-<#--            <select id = "groupsList" class="form-select" aria-label="Default select example" onchange="getGroupsValue()">-->
+<#--            <select id = "groupsList" class="form-select" aria-label="Default select example">-->
 <#--                <#list groups as group>-->
 <#--                    <option value="${group.groupName}">${group.groupName}</option>-->
 <#--                </#list>-->
@@ -154,4 +154,5 @@
         </tbody>
     </table>
     <@p.pager url page />
+    <script src = "../static/js/main.js"></script>
 </@c.page>

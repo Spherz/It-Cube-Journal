@@ -22,6 +22,11 @@ public class Groups {
     private String decreeDate;
 
     private String educationForm;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_user")
+    private User user;
+
     // add Staff
     public Groups() {
     }
@@ -29,7 +34,7 @@ public class Groups {
     public Groups(Integer id, String groupName,
                   String programName, String hours,
                   String teacher, String decreeNumber,
-                  String decreeDate, String educationForm) {
+                  String decreeDate, String educationForm, User user) {
         this.id = id;
         this.groupName = groupName;
         this.programName = programName;
@@ -38,6 +43,7 @@ public class Groups {
         this.decreeNumber = decreeNumber;
         this.decreeDate = decreeDate;
         this.educationForm = educationForm;
+        this.user = user;
     }
 
     public Integer getId() {
@@ -46,6 +52,14 @@ public class Groups {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getGroupName() {

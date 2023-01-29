@@ -23,23 +23,25 @@
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/groups">Списки групп</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/staff">Персонал</a>
-                    </li>
+                    <#if isMethodist || isAdmin>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/staff">Персонал</a>
+                        </li>
+                    </#if>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/attendance">Посещаемость</a>
                     </li>
                 </#if>
 
                 <#if isAdmin>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/user">Список пользователей</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/user">Список пользователей</a>
+                    </li>
                 </#if>
             </ul>
         </div>
-            <div class="navbar-text me-3">${name}</div>
-            <div class="navbar-text me-3">${teacherName}</div>
+        <div class="navbar-text me-3">${name}</div>
+        <div class="navbar-text me-3">${teacherName}</div>
         <@l.logout />
     </div>
 </nav>

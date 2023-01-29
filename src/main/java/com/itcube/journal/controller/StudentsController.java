@@ -54,7 +54,6 @@ public class StudentsController {
             page = studentsRepo.findAll(pageable);
         }
 
-//        model.addAttribute("groups", groupsRepo.findAll());
         model.addAttribute("filterStudents", filter);
         model.addAttribute("page", page);
         model.addAttribute("url", "/students");
@@ -63,8 +62,15 @@ public class StudentsController {
         return "students";
     }
 
+    @GetMapping("/students/get_select_value")
+    public String getValueFromDropDown(@RequestParam("groupsList") String selectValue) {
+        System.out.println(selectValue);
+
+        return "students";
+    }
+
     @GetMapping("/students")
-    public String studentsListbyGroup(@RequestParam(required = false, defaultValue = "") String groupsFilter, Model model) {
+    public String studentsListByGroup(@RequestParam("groupsList") String groupsFilter, Model model) {
         Iterable<Groups> studentsByGroup;
 
         if(groupsFilter != null && !groupsFilter.isEmpty()) {

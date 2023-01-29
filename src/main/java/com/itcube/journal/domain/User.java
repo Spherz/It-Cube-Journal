@@ -13,7 +13,7 @@ import java.util.Set;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_staff")
@@ -23,12 +23,35 @@ public class User implements UserDetails {
     @JoinColumn(name = "id_theme")
     private ThematicPlanning themeName;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_themes")
+    private Themes themes;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_group")
+    private Groups groups;
+
     @NotBlank(message = "Имя пользователя не может быть пустым")
     private String username;
 
     @NotBlank(message = "Пароль не может быть пустым")
     private String password;
     private boolean active;
+
+
+
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getThemeName() {
         return themeName != null ? themeName.getThemeName() : "<none>";
@@ -46,17 +69,20 @@ public class User implements UserDetails {
         this.staff = staff;
     }
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
-    @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
-
-    public Integer getId() {
-        return id;
+    public Themes getThemes() {
+        return themes;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setThemes(Themes themes) {
+        this.themes = themes;
+    }
+
+    public Groups getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Groups groups) {
+        this.groups = groups;
     }
 
     public String getUsername() {
