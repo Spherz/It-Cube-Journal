@@ -3,7 +3,6 @@ package com.itcube.journal.controller;
 import com.itcube.journal.domain.Attendance;
 import com.itcube.journal.domain.AttendanceDates;
 import com.itcube.journal.domain.Marks;
-import com.itcube.journal.domain.Students;
 import com.itcube.journal.repos.AttendanceDatesRepo;
 import com.itcube.journal.repos.AttendanceRepo;
 import com.itcube.journal.repos.GroupsRepo;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
