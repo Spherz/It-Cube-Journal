@@ -65,29 +65,29 @@ public class AttendanceController {
         return "attendanceEdit";
     }
 
-    @PostMapping
-    public String attendanceSave(
-            @RequestParam Map<String, String> form,
-            @RequestParam("dateId") AttendanceDates date,
-            @RequestParam("attendanceId") Attendance attendance)
-    {
-//        attendance.setDate(date);
-        System.out.println(attendance.getDate());
-
-        Set<String> marks = Arrays.stream(Marks.values())
-                .map(Marks::name)
-                .collect(Collectors.toSet());
-
-        attendance.getMark().clear();
-
-        for(String key : form.keySet()) {
-            if(marks.contains(key)) {
-                attendance.getMark().add(Marks.valueOf(key));
-            }
-        }
-
-        attendanceRepo.save(attendance);
-
-        return "redirect:/attendance";
-    }
+//    @PostMapping
+//    public String attendanceSave(
+//            @RequestParam Map<String, String> form,
+//            @RequestParam("dateId") AttendanceDates date,
+//            @RequestParam("attendanceId") Attendance attendance)
+//    {
+////        attendance.setDate(date);
+//        System.out.println(attendance.getDate());
+//
+//        Set<String> marks = Arrays.stream(Marks.values())
+//                .map(Marks::name)
+//                .collect(Collectors.toSet());
+//
+//        attendance.getMark().clear();
+//
+//        for(String key : form.keySet()) {
+//            if(marks.contains(key)) {
+//                attendance.getMark().add(Marks.valueOf(key));
+//            }
+//        }
+//
+//        attendanceRepo.save(attendance);
+//
+//        return "redirect:/attendance";
+//    }
 }

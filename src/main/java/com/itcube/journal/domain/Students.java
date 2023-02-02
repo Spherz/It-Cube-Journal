@@ -19,6 +19,10 @@ public class Students {
     private Groups nameGroup;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_course")
+    private Course course;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_staff")
     private Staff staff;
 
@@ -86,6 +90,14 @@ public class Students {
 
     public String getStaff() {
         return staff != null ? staff.getSurname() + " " + staff.getFirstname() + " " + staff.getSecondname() : "<none>";
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public void setStaff(Staff staff) {
