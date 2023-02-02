@@ -5,11 +5,12 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name = "students")
-public class Students {
+public class Students implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

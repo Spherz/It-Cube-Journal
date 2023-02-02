@@ -5,12 +5,15 @@ import com.itcube.journal.service.CourseService;
 import com.itcube.journal.service.StudentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.Serializable;
+
 @Controller
 @RequestMapping("/courses")
-public class CourseController {
+public class CourseController implements Serializable {
 
     @Autowired
     private CourseService courseService;
@@ -19,8 +22,8 @@ public class CourseController {
     private StudentsService studentsService;
 
     @GetMapping
-    public String getCoursesList(ModelMap modelMap) {
-        modelMap.put("courses", courseService.findAll());
+    public String getCoursesList(Model model) {
+        model.addAttribute("courses", courseService.findAll());
         return "courses";
     }
 
