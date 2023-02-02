@@ -8,7 +8,7 @@
                 let courseId = $(this).val();
                 $.ajax({
                     type: "GET",
-                    url: '/loadStudentsByCourse' + courseId,
+                    url: '/courses/' + courseId,
                     success: function (result) {
                         var result = JSON.parse(result);
                         let s = '';
