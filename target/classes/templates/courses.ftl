@@ -19,13 +19,14 @@
                     type: "GET",
                     url: '/courses/' + courseId,
                     success: function (data) {
-                        let result = JSON.parse(data);
-                        console.log(result);
+                        let response = JSON.parse(data);
                         let s = '';
-                        for(let i = 0; i < data.length; i++) {
-                            s+= '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+                        console.log(response[0].title);
+                        console.log(response);
+                        for(let i = 0; i < response.length; i++) {
+                            s+= '<option value="' + response[i].id + '">' + response[i] + '</option>';
                         }
-                        $('#studentsDropDown').html(s);
+                        return $('#studentsDropDown').html(s);
                     }
                 });
             });
