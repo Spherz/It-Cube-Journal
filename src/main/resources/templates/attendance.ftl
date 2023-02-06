@@ -11,21 +11,15 @@
 
     <div class="container">
         <h4 class="mt-3">Посещаемость группы:</h4>
-        <form method="get" action="/attendance" class="row row-cols-lg-auto g-3 align-items-center">
-            <div class="col-12">
-                <input type="text" name="filter" class="form-control" value="${filterStudentsByGroup!}" placeholder="Поиск">
-            </div>
-
-            <div class="col-12">
-                <button type="submit" class="btn btn-primary">Найти</button>
-            </div>
-<#--            TODO: Потестить @RequestParam в контроллере-->
-<#--            <select class="form-select form-select-lg mb-4" id="groupId" aria-label=".form-select-lg example">-->
-<#--                <option type="submit">Выберите группу</option>-->
-<#--                <#list groups as group>-->
-<#--                    <option id="groupId" name="groupId" value="${filterStudentsByGroup!}" type="submit">${group.groupName}</option>-->
-<#--                </#list>-->
-<#--            </select>-->
+        <form>
+            Направление: <select class="form-select form-select-lg mb-4" id="coursesDropDown" aria-label=".form-select-lg example">
+                <option>Выберите направление</option>
+                <#list courses as course>
+                    <option value="${course.id}">${course.courseName}</option>
+                </#list>
+            </select>
+            Группа: <select class="form-select form-select-lg mb-4" id="groupsDropDown" aria-label=".form-select-lg example"></select>
+            <input type="hidden" name="_csrf" value="${_csrf.token}" class="form-control"/>
         </form>
 
         <div class="btn-group p-2">
@@ -82,4 +76,25 @@
 <#--            </table>-->
 <#--        </#if>-->
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#coursesDropDown').change(function () {
+                let courseId = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: '/attendance/' + courseId,
+                    success: function (data) {
+                        let response = JSON.parse(data);
+                        let s = '';
+                        console.log(response[0].title);
+                        console.log(response);
+                        for(let i = 0; i < response.length; i++) {
+                            s+= '<option value="' + i + '">' + response[i] + '</option>';
+                        }
+                        return $('#groupsDropDown').html(s);
+                    }
+                });
+            });
+        });
+    </script>
 </@c.page>

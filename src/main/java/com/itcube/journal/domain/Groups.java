@@ -27,6 +27,10 @@ public class Groups {
     @JoinColumn(name = "id_user")
     private User user;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_course")
+    private Course course;
+
     // add Staff
     public Groups() {
     }
@@ -72,6 +76,14 @@ public class Groups {
 
     public String getProgramName() {
         return programName;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public void setProgramName(String program_name) {
