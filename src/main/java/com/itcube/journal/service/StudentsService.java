@@ -16,4 +16,6 @@ public class StudentsService {
     public List<Students> findByCourse(Integer id) {
         return studentsRepo.findByCourse(id);
     }
+
+    public List<Students> findByNameGroup(String name) { return studentsRepo.findByNameGroup(name); }
 }

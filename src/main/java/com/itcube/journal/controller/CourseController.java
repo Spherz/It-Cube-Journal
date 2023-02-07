@@ -31,6 +31,7 @@ public class CourseController implements Serializable {
     @GetMapping("{id}")
     public String loadStudentsByCourse(@PathVariable("id") Integer id) {
         Gson gson = new Gson();
+        System.out.println(gson.toJson(studentsService.findByCourse(id)));
         return gson.toJson(studentsService.findByCourse(id));
     }
 

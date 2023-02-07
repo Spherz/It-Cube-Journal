@@ -38,47 +38,21 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th class="text-center" scope="col">№</th>
                     <th class="text-start" scope="col">ФИО</th>
                     <#list dates as date>
                         <th class="text-start" scope="col">${date.lessonDate}</th>
                     </#list>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="students">
                 <#--    TODO: Попробовать сделать посещаемость через JavaScript        -->
                 <#--    TODO: Вывод студентов по группам        -->
-                <#list attendance as attend>
-                    <tr>
-                        <td class="text-center">${attend.id}</td>
-                        <td class="text-justify">${attend.students}</td>
-                        <#list attend.mark as mark><td class="text-center">${mark}<#sep> </#list></td>
-                        <td class="text-center"><a href="/attendance/${attend.id}">edit</a></td>
-                    </tr>
-                </#list>
                 </tbody>
             </table>
-<#--        <#else>-->
-<#--            <table class="table table-hover">-->
-<#--                <thead>-->
-<#--                <tr>-->
-<#--                    <th class="text-center" scope="col">№</th>-->
-<#--                    <th class="text-center" scope="col">ФИО</th>-->
-<#--                </tr>-->
-<#--                </thead>-->
-<#--                <tbody>-->
-<#--                <tr>-->
-<#--                    <td class="text-justify"></td>-->
-<#--                    <td class="text-justify"></td>-->
-<#--                    <td class="text-justify"></td>-->
-<#--                </tr>-->
-<#--                </tbody>-->
-<#--            </table>-->
-<#--        </#if>-->
     </div>
     <script>
         $(document).ready(function () {
-            $('#coursesDropDown').change(function () {
+            $('#coursesDropDown').on('change',function () {
                 let courseId = $(this).val();
                 $.ajax({
                     type: "GET",
@@ -89,9 +63,28 @@
                         console.log(response[0].title);
                         console.log(response);
                         for(let i = 0; i < response.length; i++) {
-                            s+= '<option value="' + i + '">' + response[i] + '</option>';
+                            s+= '<option value="' + response[i] + '" name="' + response[i] + '">' + response[i] + '</option>';
                         }
                         return $('#groupsDropDown').html(s);
+                    }
+                });
+            });
+
+            // TODO: Немного переделать вывод обучающихся в таблице
+            $('#groupsDropDown').on('change',function () {
+                let groupId = $(this).val();
+                console.log(groupId);
+                let resultStr = '';
+                $.ajax({
+                    type: "GET",
+                    url:'/attendance/students/' + groupId,
+                    success: function (data) {
+                        let response = JSON.parse(data);
+                        console.log(response);
+                        for(let i = 0; i < response.length; i++) {
+                            resultStr+= '<tr><td class="text-justify" value="' + i + '">' + response[i] + '</td></tr>';
+                        }
+                        $("#students").html(resultStr);
                     }
                 });
             });
