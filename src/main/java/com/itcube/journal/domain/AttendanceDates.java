@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Entity
 public class AttendanceDates {
 
+    //TODO: Сделать привязку дат к группам
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

@@ -45,6 +45,8 @@ public class AttendanceController {
     public String attendanceList(Model model) {
         model.addAttribute("attendance", attendanceRepo.findAll());
         model.addAttribute("dates", attendanceDatesRepo.findAll());
+        model.addAttribute("marks", attendanceRepo.findAll());
+        model.addAttribute("students", studentsRepo.findAll());
         model.addAttribute("courses", courseService.findAll());
         return "attendance";
     }

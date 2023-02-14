@@ -25,11 +25,6 @@ public class Attendance {
     @JoinColumn(name = "id_date")
     private AttendanceDates date;
 
-    @ElementCollection(targetClass = Marks.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "students_marks", joinColumns = @JoinColumn(name = "student_id"))
-    @Enumerated(EnumType.STRING)
-    private Set<Marks> mark;
-
     public Attendance() {
 
     }
@@ -53,14 +48,6 @@ public class Attendance {
     public String getStudents() {
         return students != null ? students.getSurname() + " " + students.getFirstname() +
                 " " + students.getSecondname() : "<none>";
-    }
-
-    public Set<Marks> getMark() {
-        return mark;
-    }
-
-    public void setMark(Set<Marks> marks) {
-        this.mark = marks;
     }
 
     public void setStudents(Students students) {

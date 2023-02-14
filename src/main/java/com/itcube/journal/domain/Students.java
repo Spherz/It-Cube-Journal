@@ -27,6 +27,11 @@ public class Students implements Serializable {
     @JoinColumn(name = "id_staff")
     private Staff staff;
 
+    @ElementCollection(targetClass = StudentsAttendance.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "students_marks", joinColumns = @JoinColumn(name = "student_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<StudentsAttendance> mark;
+
     @NotBlank(message = "Заполните поле")
     @Length(max = 2048, message = "Имя слишком длинное")
     private String firstname;
@@ -99,6 +104,14 @@ public class Students implements Serializable {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public Set<StudentsAttendance> getMark() {
+        return mark;
+    }
+
+    public void setMark(Set<StudentsAttendance> mark) {
+        this.mark = mark;
     }
 
     public void setStaff(Staff staff) {
