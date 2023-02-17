@@ -20,11 +20,10 @@ public interface StudentsRepo extends CrudRepository<Students, Long> {
 
     List<Students> findByNameGroup_GroupName(String groupName);
 
-
     @Query(value = "select surname, firstname, secondname from Students where course.id = :id")
     List<Students> findByCourse(@Param("id") Integer id);
 
-    @Query(value = "select surname, firstname, secondname from Students  where nameGroup.groupName = :groupName")
+    @Query(value = "select surname, firstname, secondname from Students where nameGroup.groupName = :groupName")
     List<Students> findByNameGroup(@Param("groupName") String groupName);
 
 //    Page<Students> findByUser(User user);

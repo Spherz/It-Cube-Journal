@@ -40,17 +40,18 @@
             <tr>
                 <th class="text-start" scope="col">ФИО</th>
                 <#list dates as date>
-                    <th class="text-start" scope="col">${date.lessonDate}</th>
+                    <th class="text-start" scope="col">${date.lessonDate}</th> <#-- TODO: попробовать подгружать даты через ajax-запрос
+                    TODO: Даты подгружаются в заивисимости от того, какие группы выбрали в выпадющем списке -->
                 </#list>
             </tr>
             </thead>
             <tbody id="students">
             <#list students as student>
-            <tr>
-                    <td>${student.surname}</td>
-                    <td><#list student.mark as mark>${mark.dates.lessonDate}<#sep> </#list></td>
-                    <td><#list student.mark as mark>${mark.mark}<#sep> </#list></td>
-            </tr>
+                <tr>
+                        <td>${student.surname}</td>
+    <#--                    <td><#list student.mark as mark>${mark.dates.lessonDate}<#sep> </#list></td>-->
+                        <td><#list student.mark as mark>${mark.mark}<#sep> </#list></td>
+                </tr>
             </#list>
             <#--    TODO: Попробовать сделать посещаемость через JavaScript        -->
             <#--    TODO: Вывод студентов по группам        -->

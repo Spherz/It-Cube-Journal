@@ -64,4 +64,13 @@ public class AttendanceController {
         Gson gson = new Gson();
         return gson.toJson(studentsService.findByNameGroup(name));
     }
+//    TODO: Реализовать дома!!!
+//    @ResponseBody
+//    @GetMapping
+//    public String loadStudentsAttendance(/*Подумать, что сюда передать в качестве параметра*/) {
+//        // Реализация загрузки посещаемости
+//    }
+
+    // TODO: Добавить добавление занятий (дата, кого не было, тема занятия,
+    //  (Тема и дата занятия при заполнении автоматически добавляются в тем. план))
 }

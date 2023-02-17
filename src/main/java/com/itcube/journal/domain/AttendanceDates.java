@@ -9,12 +9,11 @@ public class AttendanceDates {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String lessonDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_student")
-    private Students students;
-
-    private String lessonDate;
+    @JoinColumn(name = "id_group")
+    private Groups groups;
 
     public AttendanceDates() {
     }
@@ -22,15 +21,12 @@ public class AttendanceDates {
     public AttendanceDates(Integer id, String lessonDate, Students students) {
         this.id = id;
         this.lessonDate = lessonDate;
-        this.students = students;
     }
 
-    public Students getStudents() {
-        return students;
-    }
-
-    public void setStudents(Students students) {
-        this.students = students;
+    public AttendanceDates(Integer id, String lessonDate, Students students, Groups groups) {
+        this.id = id;
+        this.lessonDate = lessonDate;
+        this.groups = groups;
     }
 
     public Integer getId() {
@@ -47,5 +43,13 @@ public class AttendanceDates {
 
     public void setLessonDate(String lessonDate) {
         this.lessonDate = lessonDate;
+    }
+
+    public Groups getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Groups groups) {
+        this.groups = groups;
     }
 }
