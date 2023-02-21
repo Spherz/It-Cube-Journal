@@ -1,6 +1,7 @@
 package com.itcube.journal.repos;
 
 import com.itcube.journal.domain.Students;
+import com.itcube.journal.domain.StudentsAttendance;
 import com.itcube.journal.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Set;
 
 public interface StudentsRepo extends CrudRepository<Students, Long> {
     Page<Students> findAll(Pageable pageable);
@@ -23,8 +25,8 @@ public interface StudentsRepo extends CrudRepository<Students, Long> {
     @Query(value = "select surname, firstname, secondname from Students where course.id = :id")
     List<Students> findByCourse(@Param("id") Integer id);
 
-    @Query(value = "select surname, firstname, secondname from Students where nameGroup.groupName = :groupName")
+    @Query(value = "select s.surname, s.firstname, s.secondname from Students s where s.nameGroup.groupName = :groupName")
     List<Students> findByNameGroup(@Param("groupName") String groupName);
 
-//    Page<Students> findByUser(User user);
+    //    Page<Students> findByUser(User user);
 }

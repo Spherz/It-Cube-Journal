@@ -19,5 +19,9 @@ public class StudentsAttendance implements Serializable {
     @JoinColumn(name = "date_id")
     private AttendanceDates dates;
 
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private Groups groups;
+
     private String mark;
 }

@@ -154,5 +154,5 @@
         </tbody>
     </table>
     <@p.pager url page />
-<#--    <script src = "../static/js/main.js"></script>-->
+<#--    <script src = "../static/js/loadStudents.js"></script>-->
 </@c.page>

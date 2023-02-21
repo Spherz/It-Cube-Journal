@@ -18,4 +18,6 @@ public class StudentsService {
     }
 
     public List<Students> findByNameGroup(String name) { return studentsRepo.findByNameGroup(name); }
+
+//    public List<Students> findByMark(Integer id) { return studentsRepo.findByMark(id); }
 }

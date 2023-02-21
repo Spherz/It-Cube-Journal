@@ -5,6 +5,7 @@ import com.itcube.journal.repos.AttendanceDatesRepo;
 import com.itcube.journal.repos.AttendanceRepo;
 import com.itcube.journal.repos.GroupsRepo;
 import com.itcube.journal.repos.StudentsRepo;
+import com.itcube.journal.service.AttendanceDatesService;
 import com.itcube.journal.service.CourseService;
 import com.itcube.journal.service.GroupsService;
 import com.itcube.journal.service.StudentsService;
@@ -39,6 +40,9 @@ public class AttendanceController {
     private StudentsService studentsService;
 
     @Autowired
+    private AttendanceDatesService attendanceDatesService;
+
+    @Autowired
     private StudentsRepo studentsRepo;
 
     @GetMapping
@@ -64,11 +68,21 @@ public class AttendanceController {
         Gson gson = new Gson();
         return gson.toJson(studentsService.findByNameGroup(name));
     }
+
+    @ResponseBody
+    @GetMapping(value = "/students/dates/{name}")
+    public String loadDatesByGroup(@PathVariable String name) {
+        Gson gson = new Gson();
+        return gson.toJson(attendanceDatesService.findByGroups_GroupName(name));
+    }
+
 //    TODO: Реализовать дома!!!
 //    @ResponseBody
-//    @GetMapping
-//    public String loadStudentsAttendance(/*Подумать, что сюда передать в качестве параметра*/) {
-//        // Реализация загрузки посещаемости
+//    @GetMapping(value = "/students/studentsAttendance/{id}")
+//    public String loadStudentsAttendance(@PathVariable Integer id) {
+//        // Реализация загрузку посещаемости
+////        Gson gson = new Gson();
+////        return gson.toJson(studentsService.findByMark(id));
 //    }
 
     // TODO: Добавить добавление занятий (дата, кого не было, тема занятия,

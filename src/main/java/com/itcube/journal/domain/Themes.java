@@ -15,11 +15,8 @@ public class Themes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String date;
-
     private String hoursCount;
-
     private String themeName;
 
     @ManyToOne(fetch = FetchType.EAGER)
