@@ -35,18 +35,19 @@
         </div>
 
         <#--        <#if filterStudentsByGroup??>-->
-        <table class="table table-hover">
+        <table class="table table-hover" id="studentsAttendance">
             <thead>
             <tr id="dates">
                 <th class="text-start" scope="col">ФИО</th>
+                 <#list dates as date><th class="text-start" scope="col">${date.lessonDate}</th></#list>
             </tr>
             </thead>
             <tbody id="students">
             <#list students as student>
                 <tr>
-                        <td>${student.surname}</td>
+                        <td value="${student.id}">${student.surname}</td>
     <#--                    <td><#list student.mark as mark>${mark.dates.lessonDate}<#sep> </#list></td>-->
-                        <td><#list student.mark as mark>${mark.mark}<#sep> </#list></td>
+                        <td><#list student.mark as mark>${mark.mark}<#sep><td></#list></td>
                 </tr>
             </#list>
             <#--    TODO: Попробовать сделать посещаемость через JavaScript        -->
@@ -55,4 +56,5 @@
         </table>
     </div>
     <script src="../static/js/loadStudents.js"></script>
+
 </@c.page>

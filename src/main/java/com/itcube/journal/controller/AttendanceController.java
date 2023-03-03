@@ -1,14 +1,9 @@
 package com.itcube.journal.controller;
 
 import com.google.gson.Gson;
-import com.itcube.journal.repos.AttendanceDatesRepo;
-import com.itcube.journal.repos.AttendanceRepo;
-import com.itcube.journal.repos.GroupsRepo;
-import com.itcube.journal.repos.StudentsRepo;
-import com.itcube.journal.service.AttendanceDatesService;
-import com.itcube.journal.service.CourseService;
-import com.itcube.journal.service.GroupsService;
-import com.itcube.journal.service.StudentsService;
+import com.itcube.journal.domain.StudentsAttendance;
+import com.itcube.journal.repos.*;
+import com.itcube.journal.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +26,9 @@ public class AttendanceController {
     private AttendanceDatesRepo attendanceDatesRepo;
 
     @Autowired
+    private StudentsAttendanceRepo studentsAttendanceRepo;
+
+    @Autowired
     private CourseService courseService;
 
     @Autowired
@@ -41,6 +39,9 @@ public class AttendanceController {
 
     @Autowired
     private AttendanceDatesService attendanceDatesService;
+
+    @Autowired
+    private StudentsAttendanceService studentsAttendanceService;
 
     @Autowired
     private StudentsRepo studentsRepo;
@@ -74,6 +75,13 @@ public class AttendanceController {
     public String loadDatesByGroup(@PathVariable String name) {
         Gson gson = new Gson();
         return gson.toJson(attendanceDatesService.findByGroups_GroupName(name));
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/students/attend/{student_id}")
+    public String loadStudentsAttendance(@PathVariable Integer student_id) {
+        Gson gson = new Gson();
+        return gson.toJson(studentsAttendanceService.findByMarkAndDate(student_id));
     }
 
 //    TODO: Реализовать дома!!!

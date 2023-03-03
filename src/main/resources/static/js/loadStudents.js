@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     $('#coursesDropDown').on('change',function () {
         let courseId = $(this).val();
         $.ajax({
@@ -7,8 +8,6 @@ $(document).ready(function () {
             success: function (data) {
                 let response = JSON.parse(data);
                 let s = '';
-                console.log(response[0].title);
-                console.log(response);
                 for(let i = 0; i < response.length; i++) {
                     s+= '<option value="' + response[i] + '" name="' + response[i] + '">' + response[i] + '</option>';
                 }
@@ -29,12 +28,27 @@ $(document).ready(function () {
                 let response = JSON.parse(data);
                 console.log(response);
                 for(let i = 0; i < response.length; i++) {
-                    resultStr+= '<tr><td class="text-justify" value="' + i + '">' + response[i] + '</td></tr>';
+                    resultStr+= '<tr><td id="studentsList" class="text-justify" value="' + response[i].id + '">' + response[i] + '</td><td>' + '</td></tr>';
                 }
                 $("#students").html(resultStr);
+
+
             }
         });
     });
+
+    $('td').click(function () {
+        let student = $(this).val();
+        $.ajax({
+            type: "GET",
+            url: '/attendance/students/attend/' + student,
+            success: function (data) {
+                let response = JSON.parse(data);
+                console.log(response);
+            }
+        });
+    });
+
 
     $('#groupsDropDown').on('change',function () {
         let groupName = $(this).val();
@@ -44,11 +58,9 @@ $(document).ready(function () {
             url:'/attendance/students/dates/' + groupName,
             success: function (datesData) {
                 let response = JSON.parse(datesData);
-                console.log(response);
                 for(let i = 0; i < response.length; i++) {
                     resultStr+= '<th class="text-start" value="' + i + '">' + response[i] + '</th>';
                 }
-                $("#dates").html('<th class="text-justify">ФИО</th>')
                 $("#dates").html(resultStr);
             }
         });

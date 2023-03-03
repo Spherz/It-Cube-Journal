@@ -25,8 +25,7 @@ public interface StudentsRepo extends CrudRepository<Students, Long> {
     @Query(value = "select surname, firstname, secondname from Students where course.id = :id")
     List<Students> findByCourse(@Param("id") Integer id);
 
-    @Query(value = "select s.surname, s.firstname, s.secondname from Students s where s.nameGroup.groupName = :groupName")
+    @Query(value = "select new com.itcube.journal.domain.Students(s.id, s.surname, s.firstname, s.secondname) from Students s where s.nameGroup.groupName = :groupName")
     List<Students> findByNameGroup(@Param("groupName") String groupName);
-
     //    Page<Students> findByUser(User user);
 }

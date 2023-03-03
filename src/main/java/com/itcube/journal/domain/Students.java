@@ -1,11 +1,9 @@
 package com.itcube.journal.domain;
 
 
-import org.hibernate.validator.constraints.Length;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,7 +12,7 @@ public class Students implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_group")
     private Groups nameGroup;
@@ -27,13 +25,9 @@ public class Students implements Serializable {
     @JoinColumn(name = "id_staff")
     private Staff staff;
 
-    @ElementCollection(targetClass = StudentsAttendance.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "students_marks", joinColumns = @JoinColumn(name = "student_id"))
-    @Enumerated(EnumType.STRING)
-    private Set<StudentsAttendance> mark;
+    @OneToMany
+    private List<StudentsAttendance> mark;
 
-    @NotBlank(message = "Заполните поле")
-    @Length(max = 2048, message = "Имя слишком длинное")
     private String firstname;
 
     private String dateOfBirth;
@@ -57,7 +51,14 @@ public class Students implements Serializable {
     public Students() {
     }
 
-    public Students(Long id, String firstname,
+    public Students(Integer id, String surname, String firstname, String secondname) {
+        this.id = id;
+        this.surname = surname;
+        this.firstname = firstname;
+        this.secondname = secondname;
+    }
+
+    public Students(Integer id, String firstname,
                     String surname, String secondname,
                     String studentClass, String school,
                     String phoneNumber, String email,
@@ -106,11 +107,11 @@ public class Students implements Serializable {
         this.course = course;
     }
 
-    public Set<StudentsAttendance> getMark() {
+    public List<StudentsAttendance> getMark() {
         return mark;
     }
 
-    public void setMark(Set<StudentsAttendance> mark) {
+    public void setMark(List<StudentsAttendance> mark) {
         this.mark = mark;
     }
 
@@ -122,11 +123,11 @@ public class Students implements Serializable {
         this.nameGroup = nameGroup;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
