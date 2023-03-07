@@ -31,8 +31,6 @@ $(document).ready(function () {
                     resultStr+= '<tr><td id="studentsList" class="text-justify" value="' + response[i].id + '">' + response[i] + '</td><td>' + '</td></tr>';
                 }
                 $("#students").html(resultStr);
-
-
             }
         });
     });
@@ -45,7 +43,7 @@ $(document).ready(function () {
             url:'/attendance/students/dates/' + groupName,
             success: function (datesData) {
                 let response = JSON.parse(datesData);
-                resultStr+= '<th class="text-start">' + 'ФИО' + '</th>'
+                resultStr+= '<th class="text-justify">' + 'ФИО' + '</th>'
                 for(let i = 0; i < response.length; i++) {
                     resultStr+= '<th class="text-start" value="' + i + '">' + response[i] + '</th>';
                 }

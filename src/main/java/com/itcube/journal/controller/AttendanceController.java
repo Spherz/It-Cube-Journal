@@ -1,7 +1,6 @@
 package com.itcube.journal.controller;
 
 import com.google.gson.Gson;
-import com.itcube.journal.domain.StudentsAttendance;
 import com.itcube.journal.repos.*;
 import com.itcube.journal.service.*;
 import org.springframework.beans.factory.annotation.Autowired;

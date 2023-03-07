@@ -1,11 +1,9 @@
 package com.itcube.journal.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -15,11 +13,6 @@ import java.util.Set;
 @ToString
 public class StudentsAttendance implements Serializable {
 
-    public StudentsAttendance(Students student, AttendanceDates date, String mark) {
-        this.dates = date;
-        this.mark = mark;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -27,6 +20,10 @@ public class StudentsAttendance implements Serializable {
     @ManyToOne
     @JoinColumn(name = "date_id")
     private AttendanceDates dates;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_student")
+    private Students student;
 
     private String mark;
 }

@@ -7,6 +7,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
+import static javax.persistence.CascadeType.ALL;
+
 @Entity
 @Table(name = "students")
 public class Students implements Serializable {
@@ -26,9 +28,8 @@ public class Students implements Serializable {
     @JoinColumn(name = "id_staff")
     private Staff staff;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "student_id", referencedColumnName = "id")
-    @JsonManagedReference
+    @OneToMany(cascade = ALL, mappedBy = "student")
+//    @JoinColumn(name = "student_id", referencedColumnName = "id")
     private List<StudentsAttendance> attendance;
 
     private String firstname;
@@ -54,12 +55,12 @@ public class Students implements Serializable {
     public Students() {
     }
 
-    public Students(Integer id, String surname, String firstname, String secondname, List<StudentsAttendance> marks) {
+    public Students(Integer id, String surname, String firstname, String secondname, List<StudentsAttendance> attendance) {
         this.id = id;
         this.surname = surname;
         this.firstname = firstname;
         this.secondname = secondname;
-        this.attendance = marks;
+        this.attendance = attendance;
     }
 
     public Students(Integer id, String firstname,
