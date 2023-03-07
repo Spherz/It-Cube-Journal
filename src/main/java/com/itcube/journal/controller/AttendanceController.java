@@ -77,13 +77,6 @@ public class AttendanceController {
         return gson.toJson(attendanceDatesService.findByGroups_GroupName(name));
     }
 
-    @ResponseBody
-    @GetMapping(value = "/students/attend/{student_id}")
-    public String loadStudentsAttendance(@PathVariable Integer student_id) {
-        Gson gson = new Gson();
-        return gson.toJson(studentsAttendanceService.findByMarkAndDate(student_id));
-    }
-
 //    TODO: Реализовать дома!!!
 //    @ResponseBody
 //    @GetMapping(value = "/students/studentsAttendance/{id}")

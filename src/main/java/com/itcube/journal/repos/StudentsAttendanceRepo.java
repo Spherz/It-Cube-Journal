@@ -9,6 +9,4 @@ import java.util.List;
 
 public interface StudentsAttendanceRepo extends CrudRepository<StudentsAttendance, Integer> {
 
-    @Query(value = "select new com.itcube.journal.domain.StudentsAttendance(s.students, s.dates, s.mark) from StudentsAttendance s")
-    List<StudentsAttendance> findByDateAndMark(@Param("student_id") Integer id);
 }

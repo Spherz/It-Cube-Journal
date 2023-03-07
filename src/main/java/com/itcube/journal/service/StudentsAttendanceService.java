@@ -9,8 +9,5 @@ import java.util.List;
 
 @Service
 public class StudentsAttendanceService {
-    @Autowired
-    private StudentsAttendanceRepo studentsAttendanceRepo;
 
-    public List<StudentsAttendance> findByMarkAndDate(Integer id) { return studentsAttendanceRepo.findByDateAndMark(id); }
 }

@@ -1,10 +1,11 @@
 package com.itcube.journal.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "students")
@@ -25,8 +26,10 @@ public class Students implements Serializable {
     @JoinColumn(name = "id_staff")
     private Staff staff;
 
-    @OneToMany
-    private List<StudentsAttendance> mark;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
+    @JsonManagedReference
+    private List<StudentsAttendance> attendance;
 
     private String firstname;
 
@@ -51,11 +54,12 @@ public class Students implements Serializable {
     public Students() {
     }
 
-    public Students(Integer id, String surname, String firstname, String secondname) {
+    public Students(Integer id, String surname, String firstname, String secondname, List<StudentsAttendance> marks) {
         this.id = id;
         this.surname = surname;
         this.firstname = firstname;
         this.secondname = secondname;
+        this.attendance = marks;
     }
 
     public Students(Integer id, String firstname,
@@ -107,12 +111,12 @@ public class Students implements Serializable {
         this.course = course;
     }
 
-    public List<StudentsAttendance> getMark() {
-        return mark;
+    public List<StudentsAttendance> getAttendance() {
+        return attendance;
     }
 
-    public void setMark(List<StudentsAttendance> mark) {
-        this.mark = mark;
+    public void setAttendance(List<StudentsAttendance> mark) {
+        this.attendance = mark;
     }
 
     public void setStaff(Staff staff) {

@@ -47,7 +47,7 @@
                 <tr>
                         <td value="${student.id}">${student.surname}</td>
     <#--                    <td><#list student.mark as mark>${mark.dates.lessonDate}<#sep> </#list></td>-->
-                        <td><#list student.mark as mark>${mark.mark}<#sep><td></#list></td>
+                        <td><#list student.attendance as mark>${mark.mark}<#sep><td></#list></td>
                 </tr>
             </#list>
             <#--    TODO: Попробовать сделать посещаемость через JavaScript        -->

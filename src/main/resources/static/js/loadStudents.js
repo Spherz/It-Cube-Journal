@@ -37,19 +37,6 @@ $(document).ready(function () {
         });
     });
 
-    $('td').click(function () {
-        let student = $(this).val();
-        $.ajax({
-            type: "GET",
-            url: '/attendance/students/attend/' + student,
-            success: function (data) {
-                let response = JSON.parse(data);
-                console.log(response);
-            }
-        });
-    });
-
-
     $('#groupsDropDown').on('change',function () {
         let groupName = $(this).val();
         let resultStr = '';
@@ -58,6 +45,7 @@ $(document).ready(function () {
             url:'/attendance/students/dates/' + groupName,
             success: function (datesData) {
                 let response = JSON.parse(datesData);
+                resultStr+= '<th class="text-start">' + 'ФИО' + '</th>'
                 for(let i = 0; i < response.length; i++) {
                     resultStr+= '<th class="text-start" value="' + i + '">' + response[i] + '</th>';
                 }
