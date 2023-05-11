@@ -1,6 +1,5 @@
 package com.itcube.journal.controller;
 
-import com.itcube.journal.domain.Staff;
 import com.itcube.journal.domain.ThematicPlanning;
 import com.itcube.journal.domain.User;
 import com.itcube.journal.repos.ThematicPlanningRepo;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.jws.WebParam;
 import java.security.Principal;
 import java.util.Map;
 
