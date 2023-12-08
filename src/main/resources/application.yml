@@ -2,7 +2,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
   datasource:
     url: jdbc:mysql://db:3307/journal
     username: admin
