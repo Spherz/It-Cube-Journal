@@ -1,13 +1,15 @@
 spring:
+  datasource:
+    url: jdbc:postgresql://db:5432/journal
+    username: admin
+    password: C4$+zN;K*Gh`agj=HJ7[(m
+    driver-class-name: org.postgresql.Driver
   jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQL8Dialect
-  datasource:
-    url: jdbc:mysql://db:3307/journal
-    username: admin
-    password: 12345
-    hikari:
-      driver-class-name: com.mysql.cj.jdbc.Driver
+
   freemarker:
     expose-request-attributes: true
+server:
+  port: 8081
