@@ -1,0 +1,12 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/journal
+    username: root
+    password: 12345
+    hikari:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  freemarker:
+    expose-request-attributes: true
