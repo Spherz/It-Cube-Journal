@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    container_name: db
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3307:3307"
+
+  backend:
+    build: .
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3307/journal
+    container_name: app
+    depends_on:
+      - mysql
+
+volumes:
+  mysql-data:
