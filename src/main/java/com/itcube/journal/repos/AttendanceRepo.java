@@ -5,6 +5,7 @@ import com.itcube.journal.domain.ThematicPlanning;
 import com.itcube.journal.domain.User;
 import org.springframework.data.repository.CrudRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface AttendanceRepo extends CrudRepository<Attendance, Integer> {
@@ -13,6 +14,6 @@ public interface AttendanceRepo extends CrudRepository<Attendance, Integer> {
 
     List<Attendance> findByGroups_GroupName(String group);
 
-    List<Attendance> findByDate(String date);
+    List<Attendance> findAttendanceByAttendanceDate(LocalDate date);
 
 }

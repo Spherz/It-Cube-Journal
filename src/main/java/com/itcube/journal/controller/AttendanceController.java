@@ -1,49 +1,57 @@
 package com.itcube.journal.controller;
 
 import com.google.gson.Gson;
-import com.itcube.journal.repos.*;
-import com.itcube.journal.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.itcube.journal.domain.Students;
+import com.itcube.journal.repos.AttendanceDatesRepo;
+import com.itcube.journal.repos.AttendanceRepo;
+import com.itcube.journal.repos.StudentsRepo;
+import com.itcube.journal.service.AttendanceService;
+import com.itcube.journal.service.CourseService;
+import com.itcube.journal.service.GroupsService;
+import com.itcube.journal.service.StudentsService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 @RequestMapping("/attendance")
 public class AttendanceController {
 
-    @Autowired
     private AttendanceRepo attendanceRepo;
 
-    @Autowired
-    private GroupsRepo groupsRepo;
 
-    @Autowired
     private AttendanceDatesRepo attendanceDatesRepo;
 
-    @Autowired
-    private StudentsAttendanceRepo studentsAttendanceRepo;
+    private AttendanceService attendanceService;
 
-    @Autowired
+
     private CourseService courseService;
 
-    @Autowired
+
     private GroupsService groupsService;
 
-    @Autowired
+
     private StudentsService studentsService;
 
-    @Autowired
-    private AttendanceDatesService attendanceDatesService;
 
-    @Autowired
-    private StudentsAttendanceService studentsAttendanceService;
-
-    @Autowired
     private StudentsRepo studentsRepo;
+
+    public AttendanceController(AttendanceRepo attendanceRepo, AttendanceDatesRepo attendanceDatesRepo,
+                                CourseService courseService, GroupsService groupsService,
+                                StudentsService studentsService, StudentsRepo studentsRepo,
+                                AttendanceService attendanceService) {
+        this.attendanceRepo = attendanceRepo;
+        this.attendanceDatesRepo = attendanceDatesRepo;
+        this.courseService = courseService;
+        this.groupsService = groupsService;
+        this.studentsService = studentsService;
+        this.studentsRepo = studentsRepo;
+        this.attendanceService = attendanceService;
+    }
 
     @GetMapping
     public String attendanceList(Model model) {
@@ -69,12 +77,21 @@ public class AttendanceController {
         return gson.toJson(studentsService.findByNameGroup(name));
     }
 
-    @ResponseBody
-    @GetMapping(value = "/students/dates/{name}")
-    public String loadDatesByGroup(@PathVariable String name) {
-        Gson gson = new Gson();
-        return gson.toJson(attendanceDatesService.findByGroups_GroupName(name));
+    @GetMapping("/mark")
+    public String showMarkAttendanceForm(Model model) {
+        List<Students> students = (List<Students>) studentsRepo.findAll();
+        model.addAttribute("students", students);
+        return "mark-attendance-form";
     }
+
+    @PostMapping("/mark")
+    public String markAttendance(@RequestParam("studentId") Long studentId,
+                                 @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                @RequestParam("present") boolean present) {
+        return null;
+    }
+
+
 
 //    TODO: Реализовать дома!!!
 //    @ResponseBody

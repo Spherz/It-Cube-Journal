@@ -1,6 +1,9 @@
 package com.itcube.journal.domain;
 
+import lombok.*;
+
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Set;
 
 // TODO: Попробовать сделать фильтрацию dropdown все это на одной какой-то странице как (Список пользователей)
@@ -8,66 +11,31 @@ import java.util.Set;
 
 @Entity
 @Table(name = "attendance")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Attendance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_student")
+    @JoinColumn(name = "student_id")
     private Students students;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_group")
+    @JoinColumn(name = "group_id")
     private Groups groups;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_date")
-    private AttendanceDates date;
+    private LocalDate attendanceDate;
 
-    public Attendance() {
+    private boolean isPresent;
 
-    }
-
-    public Attendance(Integer id, Students students, Groups groups, AttendanceDates date, String mark) {
-        this.id = id;
+    public Attendance(Students students, LocalDate attendanceDate, boolean isPresent) {
         this.students = students;
-        this.groups = groups;
-        this.date = date;
+        this.attendanceDate = attendanceDate;
+        this.isPresent = isPresent;
     }
-
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getStudents() {
-        return students != null ? students.getSurname() + " " + students.getFirstname() +
-                " " + students.getSecondname() : "<none>";
-    }
-
-    public void setStudents(Students students) {
-        this.students = students;
-    }
-
-    public String getGroups() {
-        return groups != null ? groups.getGroupName() : "<none>";
-    }
-
-    public void setGroups(Groups groups) {
-        this.groups = groups;
-    }
-
-    public String getDate() {
-        return date != null ? date.getLessonDate() : "<none>";
-    }
-
-    public void setDate(AttendanceDates date) {
-        this.date = date;
-    }
-
 }
