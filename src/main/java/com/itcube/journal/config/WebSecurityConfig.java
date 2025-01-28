@@ -1,6 +1,7 @@
 package com.itcube.journal.config;
 
 import com.itcube.journal.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,13 +16,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private UserService userService;
 
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    private final UserService userService;
 
     @Bean
     public PasswordEncoder gePasswordEncoder() {

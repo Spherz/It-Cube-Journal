@@ -1,14 +1,11 @@
 package com.itcube.journal.controller;
 
 import com.google.gson.Gson;
-import com.itcube.journal.domain.Students;
-import com.itcube.journal.repos.AttendanceDatesRepo;
-import com.itcube.journal.repos.AttendanceRepo;
-import com.itcube.journal.repos.StudentsRepo;
+import com.itcube.journal.model.Students;
 import com.itcube.journal.service.AttendanceService;
-import com.itcube.journal.service.CourseService;
 import com.itcube.journal.service.GroupsService;
 import com.itcube.journal.service.StudentsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,48 +15,21 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/attendance")
 public class AttendanceController {
 
-    private AttendanceRepo attendanceRepo;
-
-
-    private AttendanceDatesRepo attendanceDatesRepo;
-
-    private AttendanceService attendanceService;
-
-
-    private CourseService courseService;
-
-
-    private GroupsService groupsService;
-
-
-    private StudentsService studentsService;
-
-
-    private StudentsRepo studentsRepo;
-
-    public AttendanceController(AttendanceRepo attendanceRepo, AttendanceDatesRepo attendanceDatesRepo,
-                                CourseService courseService, GroupsService groupsService,
-                                StudentsService studentsService, StudentsRepo studentsRepo,
-                                AttendanceService attendanceService) {
-        this.attendanceRepo = attendanceRepo;
-        this.attendanceDatesRepo = attendanceDatesRepo;
-        this.courseService = courseService;
-        this.groupsService = groupsService;
-        this.studentsService = studentsService;
-        this.studentsRepo = studentsRepo;
-        this.attendanceService = attendanceService;
-    }
+    private final AttendanceService attendanceService;
+    private final GroupsService groupsService;
+    private final StudentsService studentsService;
 
     @GetMapping
     public String attendanceList(Model model) {
-        model.addAttribute("attendance", attendanceRepo.findAll());
-        model.addAttribute("dates", attendanceDatesRepo.findAll());
-        model.addAttribute("marks", attendanceRepo.findAll());
-        model.addAttribute("students", studentsRepo.findAll());
-        model.addAttribute("courses", courseService.findAll());
+        model.addAttribute("attendance", attendanceService.findAll());
+        model.addAttribute("dates", attendanceService.findAll());
+        model.addAttribute("marks", attendanceService.findAll());
+        model.addAttribute("students", attendanceService.findAll());
+        model.addAttribute("courses", attendanceService.findAll());
         return "attendance";
     }
 
@@ -79,7 +49,7 @@ public class AttendanceController {
 
     @GetMapping("/mark")
     public String showMarkAttendanceForm(Model model) {
-        List<Students> students = (List<Students>) studentsRepo.findAll();
+        List<Students> students = (List<Students>) studentsService.findAll();
         model.addAttribute("students", students);
         return "mark-attendance-form";
     }

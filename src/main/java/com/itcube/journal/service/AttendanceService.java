@@ -1,6 +1,6 @@
 package com.itcube.journal.service;
 
-import com.itcube.journal.domain.Attendance;
+import com.itcube.journal.model.Attendance;
 import com.itcube.journal.repos.AttendanceRepo;
 import org.springframework.stereotype.Service;
 

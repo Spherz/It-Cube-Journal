@@ -1,8 +1,6 @@
 package com.itcube.journal.repos;
 
-import com.itcube.journal.domain.Attendance;
-import com.itcube.journal.domain.ThematicPlanning;
-import com.itcube.journal.domain.User;
+import com.itcube.journal.model.Attendance;
 import org.springframework.data.repository.CrudRepository;
 
 import java.time.LocalDate;

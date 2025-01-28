@@ -1,6 +1,6 @@
 package com.itcube.journal.service;
 
-import com.itcube.journal.domain.Students;
+import com.itcube.journal.model.Students;
 import com.itcube.journal.repos.StudentsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

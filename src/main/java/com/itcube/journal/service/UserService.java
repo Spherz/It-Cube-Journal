@@ -1,6 +1,6 @@
 package com.itcube.journal.service;
 
-import com.itcube.journal.domain.User;
+import com.itcube.journal.model.User;
 import com.itcube.journal.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,7 +1,8 @@
 package com.itcube.journal.controller;
 
-import com.itcube.journal.domain.Staff;
+import com.itcube.journal.model.Staff;
 import com.itcube.journal.repos.StaffRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,10 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Map;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/staff")
 public class StaffController {
-    @Autowired
-    private StaffRepo staffRepo;
+
+    private final StaffRepo staffRepo;
 
     @GetMapping
     public String staffList(Model model) {
@@ -31,10 +33,9 @@ public class StaffController {
             @RequestParam String secondname, @RequestParam String dateOfBirth,
             @RequestParam String education, @RequestParam String diplomaNumber,
             @RequestParam String qualification, Map<String, Object> model) {
-        Staff employee = new Staff(surname, firstname,
-                secondname, dateOfBirth,
-                education, diplomaNumber,
-                qualification);
+        Staff employee = new Staff();
+
+        setEmployee(surname, firstname, secondname, dateOfBirth, education, diplomaNumber, qualification, employee);
 
         staffRepo.save(employee);
 
@@ -43,5 +44,18 @@ public class StaffController {
         model.put("employees", employees);
 
         return "staff";
+    }
+
+    private void setEmployee(String surname, String firstname,
+                             String secondname, String dateOfBirth,
+                             String education, String diplomaNumber,
+                             String qualification, Staff employee) {
+        employee.setSurname(surname);
+        employee.setFirstname(firstname);
+        employee.setSecondname(secondname);
+        employee.setBirthDate(dateOfBirth);
+        employee.setEducation(education);
+        employee.setDiplomaNumber(diplomaNumber);
+        employee.setQualification(qualification);
     }
 }

@@ -1,12 +1,13 @@
 package com.itcube.journal.controller;
 
-import com.itcube.journal.domain.Groups;
-import com.itcube.journal.domain.Students;
+import com.itcube.journal.model.Groups;
+import com.itcube.journal.model.Students;
 import com.itcube.journal.repos.GroupsRepo;
 import com.itcube.journal.repos.StaffRepo;
 import com.itcube.journal.repos.StudentsRepo;
 import com.itcube.journal.repos.UserRepo;
 import com.itcube.journal.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,24 +23,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Map;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/students")
 public class StudentsController {
 
-    @Autowired
-    private StudentsRepo studentsRepo;
-
-    @Autowired
-    private UserRepo userRepo;
-
-    @Autowired
-    private GroupsRepo groupsRepo;
-
-    @Autowired
-    private StaffRepo staffRepo;
-
-    @Autowired
-    private UserService userService;
-
+    private final StudentsRepo studentsRepo;
+    private final UserRepo userRepo;
+    private final GroupsRepo groupsRepo;
+    private final StaffRepo staffRepo;
+    private final UserService userService;
 
     // TODO: Вернуть поиск и сделать его по keyword
     @GetMapping
@@ -95,9 +87,9 @@ public class StudentsController {
             @RequestParam String email, @RequestParam String numberPhone,
             Map<String, Object> model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        Students student = new Students(surname, firstname, secondname,
-                                        birthDate, certificate, studentClass,
-                                        parentFullName, school, numberPhone, email);
+        Students student = new Students();
+
+        setStudent(surname, firstname, secondname, birthDate, certificate, studentClass, parentFullName, school, email, numberPhone, student);
 
         studentsRepo.save(student);
 
@@ -107,6 +99,19 @@ public class StudentsController {
         model.put("url", "/students");
 
         return "students";
+    }
+
+    private void setStudent(String surname, String firstname, String secondname, String birthDate, String certificate, String studentClass, String parentFullName, String school, String email, String numberPhone, Students student) {
+        student.setSurname(surname);
+        student.setFirstname(firstname);
+        student.setSecondname(secondname);
+        student.setDateOfBirth(birthDate);
+        student.setCertificateNumber(certificate);
+        student.setStudentClass(studentClass);
+        student.setParent(parentFullName);
+        student.setSchool(school);
+        student.setEmail(email);
+        student.setPhoneNumber(numberPhone);
     }
 
 

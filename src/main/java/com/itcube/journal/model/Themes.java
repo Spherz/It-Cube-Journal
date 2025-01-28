@@ -1,16 +1,14 @@
-package com.itcube.journal.domain;
+package com.itcube.journal.model;
 
 import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "themes")
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-@ToString
+@NoArgsConstructor
+@Table(name = "themes")
 public class Themes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

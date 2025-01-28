@@ -1,36 +1,32 @@
 package com.itcube.journal.controller;
 
-import com.itcube.journal.domain.Staff;
-import com.itcube.journal.domain.ThematicPlanning;
-import com.itcube.journal.domain.User;
+import com.itcube.journal.model.ThematicPlanning;
+import com.itcube.journal.model.User;
 import com.itcube.journal.repos.ThematicPlanningRepo;
 import com.itcube.journal.repos.UserRepo;
 import com.itcube.journal.service.ThematicPlanningService;
 import com.itcube.journal.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.jws.WebParam;
 import java.security.Principal;
 import java.util.Map;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/planning")
 public class ThematicPlanningController {
-    @Autowired
-    ThematicPlanningRepo thematicPlanningRepo;
-
-    @Autowired
-    UserRepo userRepo;
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    ThematicPlanningService thematicPlanningService;
+    private final ThematicPlanningRepo thematicPlanningRepo;
+    private final UserRepo userRepo;
+    private final UserService userService;
+    private final ThematicPlanningService thematicPlanningService;
 
     @GetMapping
     public String showThemes(Model model, Principal principal) {
@@ -92,7 +88,9 @@ public class ThematicPlanningController {
             @RequestParam String totalHours,
             Map<String, Object> model
     ) {
-        ThematicPlanning planning = new ThematicPlanning(themeName, course, totalHours);
+        ThematicPlanning planning = new ThematicPlanning();
+
+        setPlanning(themeName, course, totalHours, planning);
 
         thematicPlanningRepo.save(planning);
 
@@ -101,6 +99,12 @@ public class ThematicPlanningController {
         model.put("plannings", plannings);
 
         return "redirect:/planning";
+    }
+
+    private void setPlanning(String themeName, String course, String totalHours, ThematicPlanning planning) {
+        planning.setThemeName(themeName);
+        planning.setCourse(course);
+        planning.setTotalHours(totalHours);
     }
 
 }

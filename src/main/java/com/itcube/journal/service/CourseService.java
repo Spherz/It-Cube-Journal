@@ -1,6 +1,6 @@
 package com.itcube.journal.service;
 
-import com.itcube.journal.domain.Course;
+import com.itcube.journal.model.Course;
 import com.itcube.journal.repos.CourseRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

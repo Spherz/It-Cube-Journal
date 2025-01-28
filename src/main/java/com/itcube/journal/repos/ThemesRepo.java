@@ -1,8 +1,7 @@
 package com.itcube.journal.repos;
 
-import com.itcube.journal.domain.ThematicPlanning;
-import com.itcube.journal.domain.Themes;
-import com.itcube.journal.domain.User;
+import com.itcube.journal.model.Themes;
+import com.itcube.journal.model.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

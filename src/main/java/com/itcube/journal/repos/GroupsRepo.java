@@ -1,9 +1,7 @@
 package com.itcube.journal.repos;
 
-import com.itcube.journal.domain.Groups;
-import com.itcube.journal.domain.Students;
-import com.itcube.journal.domain.ThematicPlanning;
-import com.itcube.journal.domain.User;
+import com.itcube.journal.model.Groups;
+import com.itcube.journal.model.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

@@ -1,9 +1,11 @@
 package com.itcube.journal.controller;
 
 import com.google.gson.Gson;
-import com.itcube.journal.domain.Role;
-import com.itcube.journal.domain.User;
+import com.itcube.journal.model.Role;
+import com.itcube.journal.model.User;
 import com.itcube.journal.repos.UserRepo;
+import com.itcube.journal.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -17,10 +19,11 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/user")
+@RequiredArgsConstructor
 @PreAuthorize("hasAuthority('ADMIN')")
 public class UserController {
-    @Autowired
-    private UserRepo userRepo;
+
+    private final UserService userService;
 
     @GetMapping
     public String userList(Model model) {
@@ -28,13 +31,6 @@ public class UserController {
 
         return "userList";
     }
-
-//    @ResponseBody
-//    @GetMapping("{id}")
-//    public String loadUsersById(@PathVariable("id") Integer id) {
-//        Gson gson = new Gson();
-//        return gson.toJson(userRepo.findById(id));
-//    }
 
     @GetMapping("{user}")
     public String userEditForm(@PathVariable User user, Model model) {

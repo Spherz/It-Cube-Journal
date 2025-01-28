@@ -1,10 +1,7 @@
 package com.itcube.journal.service;
 
-import com.itcube.journal.domain.Course;
-import com.itcube.journal.domain.Groups;
-import com.itcube.journal.domain.ThematicPlanning;
-import com.itcube.journal.domain.User;
-import com.itcube.journal.repos.CourseRepo;
+import com.itcube.journal.model.Groups;
+import com.itcube.journal.model.User;
 import com.itcube.journal.repos.GroupsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
