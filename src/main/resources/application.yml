@@ -1,11 +1,11 @@
 spring:
   datasource:
-    url: jdbc:postgresql://db:5432/journal
-    username: admin
-    password: C4$+zN;K*Gh`agj=HJ7[(m
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:mysql://localhost:3308/journal
+    username: user
+    password: 123456
+
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.MySQL57Dialect
     hibernate:
       ddl-auto: update
 

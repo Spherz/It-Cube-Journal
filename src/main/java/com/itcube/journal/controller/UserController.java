@@ -1,16 +1,17 @@
 package com.itcube.journal.controller;
 
-import com.google.gson.Gson;
 import com.itcube.journal.model.Role;
 import com.itcube.journal.model.User;
-import com.itcube.journal.repos.UserRepo;
 import com.itcube.journal.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class UserController {
 
     @GetMapping
     public String userList(Model model) {
-        model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("users", userService.findAll());
 
         return "userList";
     }
@@ -60,7 +61,7 @@ public class UserController {
             }
         }
 
-        userRepo.save(user);
+        user = userService.save(user);
 
         return "redirect:/user";
     }
