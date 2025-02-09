@@ -34,7 +34,6 @@
             <div class="col text-uppercase fw-bold">Дата занятия</div>
         </div>
 
-        <#--        <#if filterStudentsByGroup??>-->
         <table class="table table-hover" id="studentsAttendance">
             <thead>
             <tr id="dates">
@@ -43,13 +42,11 @@
             </tr>
             </thead>
             <tbody id="students">
-<#--            <#list students as student>-->
-<#--                <tr>-->
-<#--                        <td value="${student.id}">${student.surname}</td>-->
-<#--    &lt;#&ndash;                    <td><#list student.mark as mark>${mark.dates.lessonDate}<#sep> </#list></td>&ndash;&gt;-->
-<#--                        <td><#list student.attendance as mark>${mark.mark}<#sep><td></#list></td>-->
-<#--                </tr>-->
-<#--            </#list>-->
+            <#list students as student>
+                <tr>
+                        <td value="${student.id}">${student.surname + " " + student.firstname + " " + student.secondname}</td>
+                </tr>
+            </#list>
             <#--    TODO: Попробовать сделать посещаемость через JavaScript        -->
             <#--    TODO: Вывод студентов по группам        -->
             </tbody>

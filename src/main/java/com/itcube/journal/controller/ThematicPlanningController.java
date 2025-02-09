@@ -23,8 +23,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/planning")
 public class ThematicPlanningController {
-    private final ThematicPlanningRepo thematicPlanningRepo;
-    private final UserRepo userRepo;
+
     private final UserService userService;
     private final ThematicPlanningService thematicPlanningService;
 
@@ -92,9 +91,9 @@ public class ThematicPlanningController {
 
         setPlanning(themeName, course, totalHours, planning);
 
-        thematicPlanningRepo.save(planning);
+        planning = thematicPlanningService.save(planning);
 
-        Iterable<ThematicPlanning> plannings = thematicPlanningRepo.findAll();
+        Iterable<ThematicPlanning> plannings = thematicPlanningService.findAll();
 
         model.put("plannings", plannings);
 

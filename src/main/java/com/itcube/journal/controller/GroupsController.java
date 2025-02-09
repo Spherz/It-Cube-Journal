@@ -17,10 +17,8 @@ import java.security.Principal;
 @RequiredArgsConstructor
 @RequestMapping("/groups")
 public class GroupsController {
-    private final GroupsRepo groupsRepo;
 
     private final GroupsService groupsService;
-
     private final UserService userService;
 
     @GetMapping

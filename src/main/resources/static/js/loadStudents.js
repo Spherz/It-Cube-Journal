@@ -25,10 +25,12 @@ $(document).ready(function () {
             type: "GET",
             url:'/attendance/students/' + groupId,
             success: function (data) {
-                let response = JSON.parse(data);
-                console.log(response);
-                for(let i = 0; i < response.length; i++) {
-                    resultStr+= '<tr><td id="studentsList" class="text-justify" value="' + response[i].id + '">' + response[i] + '</td><td>' + '</td></tr>';
+                let students = JSON.parse(data);
+                for(let i = 0; i < students.length; i++) {
+                    resultStr += '<tr data-student-id="' + students[i].id + '">';
+                    resultStr += '<td class="text-justify">' + students[i].surname + ' ' + students[i].firstname + '</td>';
+                    resultStr += '<td class="attendance-cells" data-student-id="' + students[i].id + '"></td>';
+                    resultStr += '</tr>';
                 }
                 $("#students").html(resultStr);
             }

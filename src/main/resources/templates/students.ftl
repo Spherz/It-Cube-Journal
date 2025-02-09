@@ -76,42 +76,7 @@
         </div>
     </div>
 
-    <@p.pager url page />
-<#--    <div>-->
-<#--        <div class="dropdown">-->
-<#--            <select id = "teachersList" class="form-select" aria-label="Default select example" onchange="getTeacherValue()">-->
-<#--                <#list employees as staff>-->
-<#--                    <option value="${staff.surname}">${staff.surname + " " + staff.firstname + " " + staff.secondname}</option>-->
-<#--                </#list>-->
-<#--            </select>-->
-
-<#--            <script type="text/javascript">-->
-<#--                function getTeacherValue(){-->
-<#--                    var select = document.getElementById("teachersList");-->
-<#--                    var value = select.value;-->
-<#--                    console.log(value);-->
-<#--                }-->
-<#--            </script>-->
-<#--        </div>-->
-
-<#--        <div class="dropdown mt-3">-->
-<#--            <select id = "groupsList" class="form-select" aria-label="Default select example">-->
-<#--                <#list groups as group>-->
-<#--                    <option value="${group.groupName}">${group.groupName}</option>-->
-<#--                </#list>-->
-<#--            </select>-->
-
-<#--            <script type="text/javascript">-->
-<#--                function getGroupsValue(){-->
-<#--                    var select = document.getElementById("groupsList");-->
-<#--                    var value = select.value;-->
-<#--                    console.log(value);-->
-<#--                }-->
-<#--            </script>-->
-<#--        </div>-->
-<#--    </div>-->
-
-
+    <@p.pager url page filterStudents />
 
     <table class="table table-hover">
         <thead>
@@ -147,12 +112,10 @@
                 <td>${student.school}</td>
                 <td>${student.phoneNumber}</td>
                 <td>${student.email}</td>
-                <#--                <td><#list user.roles as role>${role}<#sep>, </#list></td>-->
                 <td><a href="/student/${student.id}">edit</a></td>
             </tr>
         </#list>
         </tbody>
     </table>
-    <@p.pager url page />
-<#--    <script src = "../static/js/loadStudents.js"></script>-->
+    <@p.pager url page filterStudents/>
 </@c.page>

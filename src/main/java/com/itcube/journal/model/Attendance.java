@@ -36,7 +36,7 @@ public class Attendance {
 
     private LocalDate attendanceDate;
 
-    private boolean isPresent;
+    private String mark;
 
     @Override
     public final boolean equals(Object o) {

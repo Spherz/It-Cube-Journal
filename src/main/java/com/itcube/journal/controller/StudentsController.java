@@ -1,14 +1,8 @@
 package com.itcube.journal.controller;
 
-import com.itcube.journal.model.Groups;
 import com.itcube.journal.model.Students;
-import com.itcube.journal.repos.GroupsRepo;
-import com.itcube.journal.repos.StaffRepo;
-import com.itcube.journal.repos.StudentsRepo;
-import com.itcube.journal.repos.UserRepo;
-import com.itcube.journal.service.UserService;
+import com.itcube.journal.service.StudentsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -27,29 +21,21 @@ import java.util.Map;
 @RequestMapping("/students")
 public class StudentsController {
 
-    private final StudentsRepo studentsRepo;
-    private final UserRepo userRepo;
-    private final GroupsRepo groupsRepo;
-    private final StaffRepo staffRepo;
-    private final UserService userService;
+    private final StudentsService studentsService;
 
     // TODO: Вернуть поиск и сделать его по keyword
     @GetMapping
     public String studentsList(@RequestParam(required = false, defaultValue = "") String filter,
                                Model model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<Students> page;
 
-        if(filter != null && !filter.isEmpty()) {
-            page = studentsRepo.findByNameGroup_GroupName(filter, pageable);
-            System.out.println(filter);
-        } else {
-            page = studentsRepo.findAll(pageable);
-        }
+        Page<Students> page = filter.isEmpty()
+                ? studentsService.findAll(pageable)
+                : studentsService.searchByKeyword(filter, pageable);
 
         model.addAttribute("filterStudents", filter);
         model.addAttribute("page", page);
         model.addAttribute("url", "/students");
-        model.addAttribute("employees", staffRepo.findAll());
+        model.addAttribute("employees", studentsService.findAll(pageable));
 
         return "students";
     }
@@ -57,23 +43,6 @@ public class StudentsController {
     @GetMapping("/students/get_select_value")
     public String getValueFromDropDown(@RequestParam("groupsList") String selectValue) {
         System.out.println(selectValue);
-
-        return "students";
-    }
-
-    @GetMapping("/students")
-    public String studentsListByGroup(@RequestParam("groupsList") String groupsFilter, Model model) {
-        Iterable<Groups> studentsByGroup;
-
-        if(groupsFilter != null && !groupsFilter.isEmpty()) {
-            studentsByGroup = groupsRepo.findGroupsByGroupName(groupsFilter);
-            System.out.println(groupsFilter);
-        } else {
-            studentsByGroup = groupsRepo.findAll();
-        }
-
-        model.addAttribute("groupsFilter", groupsFilter);
-        model.addAttribute("groups", studentsByGroup);
 
         return "students";
     }
@@ -91,9 +60,9 @@ public class StudentsController {
 
         setStudent(surname, firstname, secondname, birthDate, certificate, studentClass, parentFullName, school, email, numberPhone, student);
 
-        studentsRepo.save(student);
+        student = studentsService.save(student);
 
-        Page<Students> page = studentsRepo.findAll(pageable);
+        Page<Students> page = studentsService.findAll(pageable);
 
         model.put("page", page);
         model.put("url", "/students");

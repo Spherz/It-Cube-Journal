@@ -2,6 +2,7 @@ package com.itcube.journal.controller;
 
 import com.itcube.journal.model.Staff;
 import com.itcube.journal.repos.StaffRepo;
+import com.itcube.journal.service.StaffService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,11 +19,11 @@ import java.util.Map;
 @RequestMapping("/staff")
 public class StaffController {
 
-    private final StaffRepo staffRepo;
+    private final StaffService staffService;
 
     @GetMapping
     public String staffList(Model model) {
-        model.addAttribute("employees", staffRepo.findAll());
+        model.addAttribute("employees", staffService.findAll());
 
         return "staff";
     }
@@ -37,9 +38,9 @@ public class StaffController {
 
         setEmployee(surname, firstname, secondname, dateOfBirth, education, diplomaNumber, qualification, employee);
 
-        staffRepo.save(employee);
+        employee = staffService.save(employee);
 
-        Iterable<Staff> employees = staffRepo.findAll();
+        Iterable<Staff> employees = staffService.findAll();
 
         model.put("employees", employees);
 
