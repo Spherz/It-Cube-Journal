@@ -1,10 +1,11 @@
 package com.itcube.journal.controller;
 
-import com.itcube.journal.domain.Themes;
-import com.itcube.journal.domain.User;
+import com.itcube.journal.model.Themes;
+import com.itcube.journal.model.User;
 import com.itcube.journal.repos.ThemesRepo;
 import com.itcube.journal.service.ThemesService;
 import com.itcube.journal.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,17 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/themes")
 public class ThemesController {
-
-    @Autowired
-    private ThemesRepo themesRepo;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private ThemesService themesService;
+    private final ThemesService themesService;
+    private final UserService userService;
 
     @GetMapping
     public String getThemesList(Model model, @RequestParam(required = false, defaultValue = "") String filter, Principal principal) {
@@ -40,14 +35,6 @@ public class ThemesController {
             model.addAttribute("themesList", themesService.findUserThemes(user)); // TODO: Добавить поиск
         }
 
-//        if(filter != null && !filter.isEmpty()) {
-//            themesByGroup = themesRepo.findByGroups_GroupName(filter);
-//            System.out.println(filter);
-//        } else {
-//            themesByGroup = themesRepo.findAll();
-//        }
-
-//        model.addAttribute("themesList", themesByGroup);
         model.addAttribute("filterStudentsByGroup", filter);
 
         return "themes";

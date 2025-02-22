@@ -1,4 +1,4 @@
-package com.itcube.journal.domain;
+package com.itcube.journal.model;
 
 import org.springframework.security.core.GrantedAuthority;
 

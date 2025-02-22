@@ -1,9 +1,10 @@
 package com.itcube.journal.controller;
 
-import com.itcube.journal.domain.User;
+import com.itcube.journal.model.User;
 import com.itcube.journal.repos.GroupsRepo;
 import com.itcube.journal.service.GroupsService;
 import com.itcube.journal.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,16 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.security.Principal;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/groups")
 public class GroupsController {
-    @Autowired
-    private GroupsRepo groupsRepo;
 
-    @Autowired
-    private GroupsService groupsService;
-
-    @Autowired
-    private UserService userService;
+    private final GroupsService groupsService;
+    private final UserService userService;
 
     @GetMapping
     public String groupsList(Model model, Principal principal) {

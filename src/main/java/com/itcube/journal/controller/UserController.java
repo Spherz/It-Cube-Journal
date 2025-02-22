@@ -1,14 +1,17 @@
 package com.itcube.journal.controller;
 
-import com.google.gson.Gson;
-import com.itcube.journal.domain.Role;
-import com.itcube.journal.domain.User;
-import com.itcube.journal.repos.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.itcube.journal.model.Role;
+import com.itcube.journal.model.User;
+import com.itcube.journal.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -17,24 +20,18 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/user")
+@RequiredArgsConstructor
 @PreAuthorize("hasAuthority('ADMIN')")
 public class UserController {
-    @Autowired
-    private UserRepo userRepo;
+
+    private final UserService userService;
 
     @GetMapping
     public String userList(Model model) {
-        model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("users", userService.findAll());
 
         return "userList";
     }
-
-//    @ResponseBody
-//    @GetMapping("{id}")
-//    public String loadUsersById(@PathVariable("id") Integer id) {
-//        Gson gson = new Gson();
-//        return gson.toJson(userRepo.findById(id));
-//    }
 
     @GetMapping("{user}")
     public String userEditForm(@PathVariable User user, Model model) {
@@ -64,7 +61,7 @@ public class UserController {
             }
         }
 
-        userRepo.save(user);
+        user = userService.save(user);
 
         return "redirect:/user";
     }

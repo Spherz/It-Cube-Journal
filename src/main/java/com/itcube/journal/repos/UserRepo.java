@@ -1,6 +1,6 @@
 package com.itcube.journal.repos;
 
-import com.itcube.journal.domain.User;
+import com.itcube.journal.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

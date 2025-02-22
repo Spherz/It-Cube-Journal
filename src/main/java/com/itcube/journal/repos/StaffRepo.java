@@ -1,6 +1,6 @@
 package com.itcube.journal.repos;
 
-import com.itcube.journal.domain.Staff;
+import com.itcube.journal.model.Staff;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
