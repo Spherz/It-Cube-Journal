@@ -3,9 +3,23 @@ package com.itcube.journal.model;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,9 +41,8 @@ public class User implements UserDetails {
     @JoinColumn(name = "id_themes")
     private Themes themes;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_group")
-    private Groups groups;
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Groups> groups;
 
     @NotBlank(message = "Имя пользователя не может быть пустым")
     private String username;
@@ -77,11 +90,11 @@ public class User implements UserDetails {
         this.themes = themes;
     }
 
-    public Groups getGroups() {
+    public List<Groups> getGroups() {
         return groups;
     }
 
-    public void setGroups(Groups groups) {
+    public void setGroups(List<Groups> groups) {
         this.groups = groups;
     }
 

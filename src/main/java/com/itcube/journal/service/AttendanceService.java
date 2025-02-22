@@ -26,8 +26,8 @@ public class AttendanceService {
         return attendanceRepo.findAll();
     }
 
-    public List<Attendance> getAttendanceByDate(LocalDate date) {
-        return attendanceRepo.findAttendanceByAttendanceDate(date);
+    public Attendance findByStudentAndDate(Integer studentId, LocalDate attendanceDate) {
+        return attendanceRepo.findByStudentsIdAndAttendanceDate(studentId, attendanceDate);
     }
 
     public void generateAttendanceDates(Groups group, int year) {
@@ -35,8 +35,8 @@ public class AttendanceService {
         List<AttendanceDate> attendanceDates = new ArrayList<>();
 
         for (Schedule schedule : schedules) {
-            LocalDate startDate = LocalDate.of(year, 9, 1);
-            LocalDate endDate = LocalDate.of(year, 6, 30);
+            LocalDate startDate = LocalDate.of(year, 9, 3);
+            LocalDate endDate = LocalDate.of(year + 1, 6, 30);
 
             LocalDate date = startDate;
 
@@ -52,6 +52,10 @@ public class AttendanceService {
         }
 
         attendanceDateRepo.saveAll(attendanceDates);
+    }
+
+    public Attendance save(Attendance attendance) {
+        return attendanceRepo.save(attendance);
     }
 
 }

@@ -4,6 +4,8 @@ import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -15,9 +17,12 @@ import java.util.Objects;
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     private String courseName;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private List<Groups> groups = new ArrayList<>();
 
     @Override
     public final boolean equals(Object o) {

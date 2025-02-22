@@ -40,6 +40,10 @@ public class StudentsService {
         return studentsRepo.findByNameGroup_GroupName(groupName, pageable);
     }
 
+    public Students findById(Integer id) {
+        return studentsRepo.findById(id).orElse(null);
+    }
+
     public List<StudentDTO> findByGroupName(String groupName) {
         List<Students> students = studentsRepo.findByNameGroup_GroupName(groupName);
         List<StudentDTO> studentDTOList = new ArrayList<>();

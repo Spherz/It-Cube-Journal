@@ -51,7 +51,7 @@ public class Groups {
     @JoinColumn(name = "id_course")
     private Course course;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "groups", cascade = CascadeType.ALL)
     private List<Schedule> schedules = new ArrayList<>();
 
     @Override

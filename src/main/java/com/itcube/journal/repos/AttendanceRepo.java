@@ -14,4 +14,5 @@ public interface AttendanceRepo extends CrudRepository<Attendance, Integer> {
 
     List<Attendance> findAttendanceByAttendanceDate(LocalDate date);
 
+    Attendance findByStudentsIdAndAttendanceDate(Integer studentsId, LocalDate attendanceDate);
 }

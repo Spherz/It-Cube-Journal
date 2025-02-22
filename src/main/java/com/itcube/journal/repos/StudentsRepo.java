@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface StudentsRepo extends JpaRepository<Students, Long> {
+public interface StudentsRepo extends JpaRepository<Students, Integer> {
     Page<Students> findAll(Pageable pageable);
 
     Page<Students> findAllBySurname(String surname, Pageable pageable);

@@ -46,4 +46,9 @@ public class GroupsService {
         log.info("Find groups by name {}", groupName);
         return groupsRepo.findGroupsByGroupName(groupName);
     }
+
+    public List<Groups> findGroupsByCourseId(Long courseId) {
+        log.info("Find groups by course id {}", courseId);
+        return groupsRepo.findByCourseId(courseId);
+    }
 }

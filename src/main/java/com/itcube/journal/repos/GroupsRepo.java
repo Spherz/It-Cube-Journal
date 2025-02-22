@@ -15,4 +15,5 @@ public interface GroupsRepo extends CrudRepository<Groups, Long> {
     List<Groups> findByUser(User user);
     @Query(value = "select groupName from Groups where course.id = :id")
     List<Groups> findByCourse(@Param("id") Integer id);
+    List<Groups> findByCourseId(Long courseId);
 }

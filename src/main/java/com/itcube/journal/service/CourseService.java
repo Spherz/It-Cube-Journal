@@ -14,7 +14,7 @@ public class CourseService {
         return courseRepo.findAll();
     }
 
-    public Course find(Integer id) {
+    public Course find(Long id) {
         return courseRepo.findById(id).get();
     }
 }
