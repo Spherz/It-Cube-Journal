@@ -2,6 +2,8 @@ package com.itcube.journal.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itcube.journal.dto.course.CourseRequestDTO;
+import com.itcube.journal.model.Course;
 import com.itcube.journal.service.CourseService;
 import com.itcube.journal.service.StudentsService;
 import lombok.RequiredArgsConstructor;
@@ -9,11 +11,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.Serializable;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -22,8 +27,6 @@ import java.io.Serializable;
 public class CourseController implements Serializable {
 
     private final CourseService courseService;
-    private final StudentsService studentsService;
-    private final ObjectMapper objectMapper;
 
     @GetMapping
     public String getCoursesList(Model model) {
@@ -31,11 +34,9 @@ public class CourseController implements Serializable {
         return "courses";
     }
 
-    @ResponseBody
-    @GetMapping("{id}")
-    public String loadStudentsByCourse(@PathVariable("id") Integer id) throws JsonProcessingException {
-        log.info("Mapped json: {}", objectMapper.writeValueAsString(studentsService.findByCourse(id)));
-        return objectMapper.writeValueAsString(studentsService.findByCourse(id));
+    @PostMapping("/create")
+    public String createCourse(@ModelAttribute CourseRequestDTO courseRequestDTO) {
+        courseService.save(courseRequestDTO);
+        return "redirect:/courses";
     }
-
 }
