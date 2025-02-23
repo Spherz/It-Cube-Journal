@@ -76,8 +76,7 @@
                 <td>${staff.education}</td>
                 <td>${staff.diplomaNumber}</td>
                 <td>${staff.qualification}</td>
-                <#--                <td><#list user.roles as role>${role}<#sep>, </#list></td>-->
-                <td><a href="/staff/${staff.id}">edit</a></td>
+                <td><a href="/staff/${staff.id}">Редактировать</a></td>
             </tr>
         </#list>
         </tbody>
