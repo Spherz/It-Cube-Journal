@@ -1,5 +1,6 @@
 package com.itcube.journal.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -39,7 +41,8 @@ public class Staff {
 
     private String secondname;
 
-    private String birthDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
+    private LocalDate birthDate;
 
     private String education;
 
