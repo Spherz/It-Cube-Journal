@@ -2,35 +2,53 @@
 <#import "parts/pager.ftl" as p>
 
 <@c.page>
-    <form>
-        Направление: <select class="form-select form-select-lg mb-4" id="coursesDropDown" aria-label=".form-select-lg example">
-            <option>Выберите направление</option>
-            <#list courses as course>
-                <option value="${course.id}">${course.courseName}</option>
-            </#list>
-        </select>
-        Список студентов: <select class="form-select form-select-lg mb-4" id="studentsDropDown" aria-label=".form-select-lg example"></select>
-        <input type="hidden" name="_csrf" value="${_csrf.token}" class="form-control"/>
-    </form>
-    <script>
-        $(document).ready(function () {
-            $('#coursesDropDown').change(function () {
-                let courseId = $(this).val();
-                $.ajax({
-                    type: "GET",
-                    url: '/courses/' + courseId,
-                    success: function (data) {
-                        let response = JSON.parse(data);
-                        let s = '';
-                        console.log(response[0].title);
-                        console.log(response);
-                        for(let i = 0; i < response.length; i++) {
-                            s+= '<option value="' + i + '">' + response[i] + '</option>';
-                        }
-                        return $('#studentsDropDown').html(s);
-                    }
-                });
-            });
-        });
-    </script>
+    <div class="row">
+        <h3 class="text-center">Направления</h3>
+
+        <div class="col">
+            <div class="mt-3">
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Добавление курса
+                </a>
+            </div>
+
+            <div class="card col-6">
+                <div class="card-body">
+                    <div class="collapse" id="collapseExample">
+                        <div class="mt-3">
+                            <form method="post" action="/courses/create" class="row align-items-center">
+                                <div class="col-6 mb-3">
+                                    <input type="text" name="courseName" placeholder="Введите наименование направления" class="form-control"/>
+                                </div>
+
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-primary">Добавить</button>
+                                </div>
+
+                                <input type="hidden" name="_csrf" value="${_csrf.token}" class="form-control"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col">Наименование направления</th>
+        </tr>
+        </thead>
+        <tbody>
+        <#list courses as course>
+            <tr>
+                <td>${course.id}</td>
+                <td>${course.courseName}</td>
+                <td><a href="/staff/${course.id}">Редактировать</a></td>
+            </tr>
+        </#list>
+        </tbody>
+    </table>
 </@c.page>

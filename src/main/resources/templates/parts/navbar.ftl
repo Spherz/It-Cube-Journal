@@ -21,6 +21,9 @@
                         <a class="nav-link" aria-current="page" href="/planning">Тематическое планирование</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/courses">Направления</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/groups">Списки групп</a>
                     </li>
                     <#if isMethodist || isAdmin>
