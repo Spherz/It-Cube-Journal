@@ -2,10 +2,12 @@ package com.itcube.journal.model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.proxy.HibernateProxy;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,13 +16,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
-
-import static javax.persistence.CascadeType.ALL;
 
 @Entity
 @Getter
@@ -30,7 +30,7 @@ import static javax.persistence.CascadeType.ALL;
 public class Students implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_group")
@@ -47,7 +47,9 @@ public class Students implements Serializable {
 
     private String firstname;
 
-    private String dateOfBirth;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    private LocalDate dateOfBirth;
 
     private String certificateNumber;
 
@@ -71,6 +73,11 @@ public class Students implements Serializable {
 
     public String getStaff() {
         return staff != null ? staff.getSurname() + " " + staff.getFirstname() + " " + staff.getSecondname() : "<none>";
+    }
+
+    public String getFormattedBirthday() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        return dateOfBirth.format(formatter);
     }
 
     @Override

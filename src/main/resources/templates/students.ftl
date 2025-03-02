@@ -38,11 +38,11 @@
                             </div>
 
                             <div class="mb-3">
-                                <input type="text" name="birthDate" placeholder="Дату рождения" class="form-control">
+                                <input type="text" name="dateOfBirth" placeholder="Дату рождения" class="form-control">
                             </div>
 
                             <div class="mb-3">
-                                <input type="text" name="certificate" placeholder="№ сертификата ПФДО" class="form-control">
+                                <input type="text" name="certificateNumber" placeholder="№ сертификата ПФДО" class="form-control">
                             </div>
 
                             <div class="mb-3">
@@ -50,7 +50,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <input type="text" name="parentFullName" placeholder="ФИО Родителя" class="form-control">
+                                <input type="text" name="parent" placeholder="ФИО Родителя" class="form-control">
                             </div>
 
                             <div class="mb-3">
@@ -58,7 +58,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <input type="text" name="numberPhone" placeholder="Номер телефона" class="form-control">
+                                <input type="text" name="phoneNumber" placeholder="Номер телефона" class="form-control">
                             </div>
 
                             <div class="mb-3">
@@ -105,14 +105,14 @@
                 <td>${student.secondname}</td>
                 <td>${student.nameGroup}</td>
                 <td>${student.staff}</td>
-                <td>${student.dateOfBirth}</td>
+                <td>${student.getFormattedBirthday()}</td>
                 <td>${student.certificateNumber}</td>
                 <td>${student.studentClass}</td>
                 <td>${student.parent}</td>
                 <td>${student.school}</td>
                 <td>${student.phoneNumber}</td>
                 <td>${student.email}</td>
-                <td><a href="/student/${student.id}">edit</a></td>
+                <td><a href="/students/${student.id}">edit</a></td>
             </tr>
         </#list>
         </tbody>
