@@ -1,5 +1,6 @@
 package com.itcube.journal.controller;
 
+import com.itcube.journal.dto.students.StudentsRequestDTO;
 import com.itcube.journal.model.Students;
 import com.itcube.journal.service.StudentsService;
 import lombok.RequiredArgsConstructor;
@@ -10,11 +11,16 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,7 +29,6 @@ public class StudentsController {
 
     private final StudentsService studentsService;
 
-    // TODO: Вернуть поиск и сделать его по keyword
     @GetMapping
     public String studentsList(@RequestParam(required = false, defaultValue = "") String filter,
                                Model model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
@@ -47,20 +52,24 @@ public class StudentsController {
         return "students";
     }
 
+    @GetMapping("/{studentId}")
+    public String studentUpdateForm(@PathVariable Integer studentId, Model model) {
+        model.addAttribute("student", studentsService.findById(studentId));
+        return "studentsEdit";
+    }
+
+    @PostMapping("/update/{studentId}")
+    public String updateStudent(@PathVariable Integer studentId, @ModelAttribute StudentsRequestDTO studentsRequestDTO) {
+        studentsService.update(studentId, studentsRequestDTO);
+        return "redirect:/students";
+    }
+
     @PostMapping
     public String add(
-            @RequestParam String surname, @RequestParam String firstname,
-            @RequestParam String secondname, @RequestParam String birthDate,
-            @RequestParam String certificate, @RequestParam String studentClass,
-            @RequestParam String parentFullName, @RequestParam String school,
-            @RequestParam String email, @RequestParam String numberPhone,
+            @ModelAttribute StudentsRequestDTO studentsRequestDTO,
             Map<String, Object> model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        Students student = new Students();
-
-        setStudent(surname, firstname, secondname, birthDate, certificate, studentClass, parentFullName, school, email, numberPhone, student);
-
-        student = studentsService.save(student);
+        studentsService.save(studentsRequestDTO);
 
         Page<Students> page = studentsService.findAll(pageable);
 
@@ -69,19 +78,4 @@ public class StudentsController {
 
         return "students";
     }
-
-    private void setStudent(String surname, String firstname, String secondname, String birthDate, String certificate, String studentClass, String parentFullName, String school, String email, String numberPhone, Students student) {
-        student.setSurname(surname);
-        student.setFirstname(firstname);
-        student.setSecondname(secondname);
-        student.setDateOfBirth(birthDate);
-        student.setCertificateNumber(certificate);
-        student.setStudentClass(studentClass);
-        student.setParent(parentFullName);
-        student.setSchool(school);
-        student.setEmail(email);
-        student.setPhoneNumber(numberPhone);
-    }
-
-
 }

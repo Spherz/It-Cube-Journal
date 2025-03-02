@@ -1,18 +1,19 @@
 package com.itcube.journal.service;
 
 import com.itcube.journal.dto.students.StudentDTO;
+import com.itcube.journal.dto.students.StudentsRequestDTO;
+import com.itcube.journal.mapper.students.StudentsMapper;
 import com.itcube.journal.model.Students;
 import com.itcube.journal.repos.StudentsRepo;
 import com.itcube.journal.specification.StudentsSpecification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import java.util.List;
 public class StudentsService {
 
     private final StudentsRepo studentsRepo;
+    private final StudentsMapper studentsMapper;
     private final StudentsSpecification studentsSpecification;
 
     public Page<Students> findAll(Pageable pageable) {
@@ -30,14 +32,6 @@ public class StudentsService {
 
     public Iterable<Students> findAll() {
         return studentsRepo.findAll();
-    }
-
-    public List<Students> findByCourse(Integer id) {
-        return studentsRepo.findByCourse(id);
-    }
-
-    public Page<Students> findByGroupName(String groupName, Pageable pageable) {
-        return studentsRepo.findByNameGroup_GroupName(groupName, pageable);
     }
 
     public Students findById(Integer id) {
@@ -56,8 +50,10 @@ public class StudentsService {
         return studentDTOList;
     }
 
-    public Students save(Students students) {
-        return studentsRepo.save(students);
+    public Students save(StudentsRequestDTO students) {
+        Students savedStudents = studentsMapper.mapStudentsRequestDTOToStudents(students);
+        savedStudents = studentsRepo.save(savedStudents);
+        return savedStudents;
     }
 
     public Page<Students> searchByKeyword(String keyword, Pageable pageable) {
@@ -73,5 +69,15 @@ public class StudentsService {
         studentDTO.setSurname(student.getSurname());
         studentDTO.setSecondname(student.getSecondname());
         return studentDTO;
+    }
+
+    @Transactional
+    public Students update(Integer studentId, StudentsRequestDTO studentsRequestDTO) {
+        Students updatedStudent = studentsRepo.findById(studentId)
+                .orElseThrow(() -> new RuntimeException("Unable to find student with id: " + studentId));
+
+        studentsMapper.updateStudentsFromDTO(studentsRequestDTO, updatedStudent);
+
+        return updatedStudent;
     }
 }
