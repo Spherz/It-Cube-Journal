@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface GroupsRepo extends CrudRepository<Groups, Long> {
+public interface GroupsRepo extends CrudRepository<Groups, Integer> {
     List<Groups> findGroupsByGroupName(String groupName);
     Optional<Groups> findById(Integer id);
     List<Groups> findByUser(User user);
