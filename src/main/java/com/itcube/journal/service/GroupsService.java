@@ -1,15 +1,16 @@
 package com.itcube.journal.service;
 
+import com.itcube.journal.dto.groups.GroupRequestDTO;
+import com.itcube.journal.mapper.groups.GroupsMapper;
 import com.itcube.journal.model.Groups;
 import com.itcube.journal.model.User;
 import com.itcube.journal.repos.GroupsRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -17,6 +18,7 @@ import java.util.Optional;
 public class GroupsService {
 
     private final GroupsRepo groupsRepo;
+    private final GroupsMapper groupsMapper;
 
     public Iterable<Groups> findAll() {
         log.info("Find all groups");
@@ -50,5 +52,22 @@ public class GroupsService {
     public List<Groups> findGroupsByCourseId(Long courseId) {
         log.info("Find groups by course id {}", courseId);
         return groupsRepo.findByCourseId(courseId);
+    }
+
+    public Groups save(GroupRequestDTO groupRequestDTO) {
+        Groups group = groupsMapper.mapGroupRequestDTOToGroup(groupRequestDTO);
+        groupsRepo.save(group);
+
+        return group;
+    }
+
+    @Transactional
+    public Groups update(GroupRequestDTO groupRequestDTO, Integer groupId) {
+        Groups groups = groupsRepo.findById(groupId)
+                .orElseThrow(() -> new RuntimeException("Can't find groups with id: " + groupId));
+
+        groupsMapper.updateGroupFromDTO(groupRequestDTO, groups);
+
+        return groupsRepo.save(groups);
     }
 }
