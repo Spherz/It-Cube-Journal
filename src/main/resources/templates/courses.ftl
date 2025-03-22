@@ -46,7 +46,7 @@
             <tr>
                 <td>${course.id}</td>
                 <td>${course.courseName}</td>
-                <td><a href="/staff/${course.id}">Редактировать</a></td>
+                <td><a href="/courses/${course.id}">Редактировать</a></td>
             </tr>
         </#list>
         </tbody>

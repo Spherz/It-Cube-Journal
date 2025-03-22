@@ -24,6 +24,16 @@ public class Course {
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Groups> groups = new ArrayList<>();
 
+    public void addGroup(Groups group) {
+        this.groups.add(group);
+        group.setCourse(this);
+    }
+
+    public void removeGroup(Groups group) {
+        this.groups.remove(group);
+        group.setCourse(null);
+    }
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
