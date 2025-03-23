@@ -1,16 +1,8 @@
 <#import "parts/common.ftl" as c>
 <@c.page>
-    <h3>Тематическое планирование</h3>
+    <h3 class="text-center">Тематическое планирование</h3>
 
     <form method="get" action="/planning" class="row row-cols-lg-auto g-3 align-items-center">
-<#--        <div class="col-12">-->
-<#--            <input type="text" name="filter" class="form-control" value="${filter!}" placeholder="Search by theme name">-->
-<#--        </div>-->
-
-<#--        <div class="col-12">-->
-<#--            <button type="submit" class="btn btn-primary">Search</button>-->
-<#--        </div>-->
-
         <div class="col-12">
             <input type="text" name="filter" class="form-control" value="${filter!}" placeholder="Поиск">
         </div>

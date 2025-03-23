@@ -3,11 +3,9 @@ package com.itcube.journal.service;
 import com.itcube.journal.model.User;
 import com.itcube.journal.repos.UserRepo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +16,6 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
 
     private final UserRepo userRepo;
-
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
 
     List<User> users;
 
@@ -53,5 +48,4 @@ public class UserService implements UserDetailsService {
         return userRepo.findByUsername(username);
     }
 
-    // TODO: Добавить метод для добавления пользователей в систему
 }

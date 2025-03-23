@@ -3,7 +3,6 @@ package com.itcube.journal.service;
 import com.itcube.journal.dto.groups.GroupRequestDTO;
 import com.itcube.journal.mapper.groups.GroupsMapper;
 import com.itcube.journal.model.Groups;
-import com.itcube.journal.model.User;
 import com.itcube.journal.repos.GroupsRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

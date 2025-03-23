@@ -1,6 +1,6 @@
 <#import "parts/common.ftl" as c>
 <@c.page>
-    <h3>Staff</h3>
+    <h3 class="text-center">Сотрудники</h3>
 
     <div class="container">
         <div class="row">

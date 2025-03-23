@@ -14,7 +14,6 @@ import com.itcube.journal.service.CourseService;
 import com.itcube.journal.service.GroupsService;
 import com.itcube.journal.service.StudentsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -93,7 +92,6 @@ public class AttendanceController {
         return objectMapper.writeValueAsString(studentsService.findByGroupName(name));
     }
 
-//    @ResponseBody
     @GetMapping("/schedule/{groupId}")
     public String loadSchedule(@PathVariable Integer groupId, Model model) {
         Groups groups = groupsService.findById(groupId);

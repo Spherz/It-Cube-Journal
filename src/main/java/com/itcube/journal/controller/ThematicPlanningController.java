@@ -2,8 +2,6 @@ package com.itcube.journal.controller;
 
 import com.itcube.journal.model.ThematicPlanning;
 import com.itcube.journal.model.User;
-import com.itcube.journal.repos.ThematicPlanningRepo;
-import com.itcube.journal.repos.UserRepo;
 import com.itcube.journal.service.ThematicPlanningService;
 import com.itcube.journal.service.UserService;
 import lombok.RequiredArgsConstructor;
