@@ -30,8 +30,6 @@ public class GroupsController {
 
         if(user.isAdmin() || user.isMethodist()) {
             model.addAttribute("groups", groupsService.findGroups());
-        } else {
-            model.addAttribute("groups", groupsService.findUserGroups(user));
         }
 
         return "groups";

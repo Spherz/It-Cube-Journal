@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.proxy.HibernateProxy;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,8 +14,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -31,9 +35,8 @@ public class Staff {
     @JoinColumn(name = "user_nickname")
     private User nickname;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "group_id")
-    private Groups teacherGroups;
+    @OneToMany(mappedBy = "staff", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<Groups> teacherGroups = new ArrayList<>();
 
     private String firstname;
 
@@ -49,6 +52,16 @@ public class Staff {
     private String diplomaNumber;
 
     private String qualification;
+
+    public void addGroup(Groups group) {
+        this.teacherGroups.add(group);
+        group.setStaff(this);
+    }
+
+    public void removeGroup(Groups group) {
+        this.teacherGroups.remove(group);
+        group.setStaff(null);
+    }
 
     @Override
     public final boolean equals(Object o) {

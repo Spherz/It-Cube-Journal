@@ -41,17 +41,12 @@ public class User implements UserDetails {
     @JoinColumn(name = "id_themes")
     private Themes themes;
 
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Groups> groups;
-
     @NotBlank(message = "Имя пользователя не может быть пустым")
     private String username;
 
     @NotBlank(message = "Пароль не может быть пустым")
     private String password;
     private boolean active;
-
-
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
@@ -88,14 +83,6 @@ public class User implements UserDetails {
 
     public void setThemes(Themes themes) {
         this.themes = themes;
-    }
-
-    public List<Groups> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(List<Groups> groups) {
-        this.groups = groups;
     }
 
     public String getUsername() {
