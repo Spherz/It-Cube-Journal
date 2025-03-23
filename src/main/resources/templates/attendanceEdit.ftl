@@ -2,7 +2,7 @@
 <#import "parts/pager.ftl" as p>
 
 <@c.page>
-    <h2>Посещаемость</h2>
+    <h3>Посещаемость</h3>
     <form action="/attendance" method="post" class="form-horizontal">
         <p>${attendance.students}</p>
 

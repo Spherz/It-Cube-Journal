@@ -2,7 +2,7 @@
 <#import "parts/pager.ftl" as p>
 
 <@c.page>
-    <h3>Students page</h3>
+    <h3 class="text-center">Список обучающихся</h3>
 
     <form method="get" action="/students" class="row row-cols-lg-auto g-3 align-items-center">
         <div class="col-12">
