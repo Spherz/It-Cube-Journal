@@ -8,6 +8,7 @@ import org.hibernate.proxy.HibernateProxy;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,8 +45,12 @@ public class Groups {
     private String educationForm;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_user")
-    private User user;
+    @JoinColumn(
+            name = "staff_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "staff_id_FK")
+    )
+    private Staff staff;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_course")

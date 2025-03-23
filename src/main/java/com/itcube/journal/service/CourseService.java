@@ -6,6 +6,7 @@ import com.itcube.journal.model.Course;
 import com.itcube.journal.model.Groups;
 import com.itcube.journal.repos.CourseRepo;
 import com.itcube.journal.repos.GroupsRepo;
+import com.itcube.journal.util.GroupBinding;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,9 @@ import java.util.stream.Collectors;
 public class CourseService {
 
     private final CourseRepo courseRepo;
-    private final CourseMapper courseMapper;
     private final GroupsRepo groupsRepo;
+    private final CourseMapper courseMapper;
+    private final GroupBinding groupBinding;
 
     public Iterable<Course> findAll() {
         return courseRepo.findAll();
@@ -51,15 +53,13 @@ public class CourseService {
                 .map(groupsRepo::findByGroupName)
                 .collect(Collectors.toList());
 
-        for (Groups group : new ArrayList<>(courseGroups)) {
-            if (!newGroups.contains(group)) {
-                updatedCourse.removeGroup(group);
-            }
-        }
-
-        newGroups.forEach(updatedCourse::addGroup);
-
-        updatedCourse = courseRepo.save(updatedCourse);
+        groupBinding.updateGroups(
+                updatedCourse,
+                courseGroups,
+                newGroups,
+                Course::addGroup,
+                Course::removeGroup
+        );
 
         return updatedCourse;
     }

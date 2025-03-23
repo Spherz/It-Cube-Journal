@@ -2,6 +2,7 @@ package com.itcube.journal.controller;
 
 import com.itcube.journal.dto.staff.StaffRequestDTO;
 import com.itcube.journal.model.Staff;
+import com.itcube.journal.service.GroupsService;
 import com.itcube.journal.service.StaffService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ import java.util.Map;
 public class StaffController {
 
     private final StaffService staffService;
+    private final GroupsService groupsService;
 
     @GetMapping
     public String staffList(Model model) {
@@ -53,6 +55,7 @@ public class StaffController {
     @GetMapping("/{staffId}")
     public String updateStaffForm(@PathVariable Integer staffId, Model model) {
         model.addAttribute("staff", staffService.findById(staffId));
+        model.addAttribute("groups", groupsService.findAll());
         return "staffEdit";
     }
 

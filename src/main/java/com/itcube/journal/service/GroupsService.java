@@ -36,10 +36,6 @@ public class GroupsService {
         return groupsRepo.findByCourse(id);
     }
 
-    public List<Groups> findUserGroups(User user) {
-        log.info("Find groups by user {}", user);
-        return groupsRepo.findByUser(user);
-    }
     public Iterable<Groups> findGroups() {
         return groupsRepo.findAll();
     }

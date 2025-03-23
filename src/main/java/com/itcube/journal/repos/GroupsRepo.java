@@ -12,7 +12,6 @@ import java.util.Optional;
 public interface GroupsRepo extends CrudRepository<Groups, Integer> {
     List<Groups> findGroupsByGroupName(String groupName);
     Optional<Groups> findById(Integer id);
-    List<Groups> findByUser(User user);
     @Query(value = "select groupName from Groups where course.id = :id")
     List<Groups> findByCourse(@Param("id") Integer id);
     List<Groups> findByCourseId(Long courseId);

@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,4 +19,5 @@ public class StaffRequestDTO {
     private String education;
     private String diplomaNumber;
     private String qualification;
+    private List<String> staffGroup = new ArrayList<>();
 }
