@@ -34,6 +34,9 @@
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/attendance">Посещаемость</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/schedule">Расписание</a>
+                    </li>
                 </#if>
 
                 <#if isAdmin>
