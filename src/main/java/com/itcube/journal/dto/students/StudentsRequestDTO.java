@@ -22,4 +22,6 @@ public class StudentsRequestDTO {
     private String school;
     private String phoneNumber;
     private String email;
+    private String studentCourse;
+    private String studentGroup;
 }

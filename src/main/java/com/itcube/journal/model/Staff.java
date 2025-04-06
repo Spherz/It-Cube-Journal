@@ -63,6 +63,10 @@ public class Staff {
         group.setStaff(null);
     }
 
+    public String getStaffFullName() {
+        return surname + " " + firstname + " " + secondname;
+    }
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;

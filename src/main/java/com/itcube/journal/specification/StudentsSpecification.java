@@ -1,5 +1,8 @@
 package com.itcube.journal.specification;
 
+import com.itcube.journal.model.Course;
+import com.itcube.journal.model.Groups;
+import com.itcube.journal.model.Staff;
 import com.itcube.journal.model.Students;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
@@ -7,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.lang.reflect.Field;
@@ -31,7 +36,10 @@ public class StudentsSpecification {
             return criteriaBuilder.conjunction();
         }
 
-        String likePattern = "%" + keyword + "%";
+        Join<Students, Course> courseJoin = root.join("course", JoinType.LEFT);
+        Join<Students, Groups> groupJoin = root.join("nameGroup", JoinType.LEFT);
+
+        String likePattern = "%" + keyword.toLowerCase() + "%";
         List<Predicate> predicates = new ArrayList<>();
 
         for (Field field : Students.class.getDeclaredFields()) {
@@ -44,27 +52,27 @@ public class StudentsSpecification {
             }
         }
 
-        if (hasAttribute(root, "nameGroup", "groupName")) {
+        if (hasAttribute(courseJoin, "courseName")) {
             predicates.add(criteriaBuilder.like(
-                    criteriaBuilder.lower(root.get("nameGroup").get("groupName")), likePattern
+                    criteriaBuilder.lower(courseJoin.get("courseName")), likePattern
             ));
         }
 
-        if (hasAttribute(root, "staff", "surname")) {
+        if (hasAttribute(groupJoin, "groupName")) {
             predicates.add(criteriaBuilder.like(
-                    criteriaBuilder.lower(root.get("staff").get("surname")), likePattern
+                    criteriaBuilder.lower(groupJoin.get("groupName")), likePattern
             ));
         }
 
         return predicates.isEmpty() ? criteriaBuilder.disjunction() : criteriaBuilder.or(predicates.toArray(new Predicate[0]));
     }
 
-    private boolean hasAttribute(Root<?> root, String entity, String field) {
+    private boolean hasAttribute(Join<?, ?> join, String field) {
         try {
-            root.get(entity).get(field);
+            join.get(field);
             return true;
         } catch (Exception e) {
-            log.warn("Field '{}.{}' is not accessible via Criteria API", entity, field);
+            log.warn("Field '{}.{}' is not accessible via Criteria API", join, field);
             return false;
         }
     }

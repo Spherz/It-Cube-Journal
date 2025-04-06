@@ -85,15 +85,9 @@
             <th scope="col">Фамилия</th>
             <th scope="col">Имя</th>
             <th scope="col">Отчество</th>
+            <th scope="col">Направление</th>
             <th scope="col">Группа</th>
             <th scope="col">Преподаватель</th>
-            <th scope="col">Дата рождения</th>
-            <th scope="col">№ сертификата ПФДО</th>
-            <th scope="col">Класс</th>
-            <th scope="col">ФИО Родителя</th>
-            <th scope="col">Школа</th>
-            <th scope="col">Номер телефона</th>
-            <th scope="col">Электронная почта</th>
         </tr>
         </thead>
         <tbody>
@@ -103,15 +97,9 @@
                 <td>${student.surname}</td>
                 <td>${student.firstname}</td>
                 <td>${student.secondname}</td>
-                <td>${student.nameGroup}</td>
-                <td>${student.staff}</td>
-                <td>${student.getFormattedBirthday()}</td>
-                <td>${student.certificateNumber}</td>
-                <td>${student.studentClass}</td>
-                <td>${student.parent}</td>
-                <td>${student.school}</td>
-                <td>${student.phoneNumber}</td>
-                <td>${student.email}</td>
+                <td>${(student.course.courseName)!""}</td>
+                <td>${(student.nameGroup.groupName)!""}</td>
+                <td>${(student.nameGroup.staff.getStaffFullName())!""}</td>
                 <td><a href="/students/${student.id}">edit</a></td>
             </tr>
         </#list>

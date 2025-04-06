@@ -3,7 +3,11 @@ package com.itcube.journal.service;
 import com.itcube.journal.dto.students.StudentDTO;
 import com.itcube.journal.dto.students.StudentsRequestDTO;
 import com.itcube.journal.mapper.students.StudentsMapper;
+import com.itcube.journal.model.Course;
+import com.itcube.journal.model.Groups;
 import com.itcube.journal.model.Students;
+import com.itcube.journal.repos.CourseRepo;
+import com.itcube.journal.repos.GroupsRepo;
 import com.itcube.journal.repos.StudentsRepo;
 import com.itcube.journal.specification.StudentsSpecification;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +26,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudentsService {
 
+    private final GroupsRepo groupsRepo;
+    private final CourseRepo courseRepo;
     private final StudentsRepo studentsRepo;
     private final StudentsMapper studentsMapper;
     private final StudentsSpecification studentsSpecification;
@@ -75,8 +81,15 @@ public class StudentsService {
     public Students update(Integer studentId, StudentsRequestDTO studentsRequestDTO) {
         Students updatedStudent = studentsRepo.findById(studentId)
                 .orElseThrow(() -> new RuntimeException("Unable to find student with id: " + studentId));
+        Groups group = groupsRepo.findByGroupName(studentsRequestDTO.getStudentGroup());
+        Course course = courseRepo.findByCourseName(studentsRequestDTO.getStudentCourse());
+
+        updatedStudent.setNameGroup(group);
+        updatedStudent.setCourse(course);
 
         studentsMapper.updateStudentsFromDTO(studentsRequestDTO, updatedStudent);
+
+        updatedStudent = studentsRepo.save(updatedStudent);
 
         return updatedStudent;
     }
