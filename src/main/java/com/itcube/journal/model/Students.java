@@ -67,9 +67,9 @@ public class Students implements Serializable {
 
     private String email;
 
-    public String getNameGroup() {
-        return nameGroup != null ? nameGroup.getGroupName() : "<none>";
-    }
+//    public String getNameGroup() {
+//        return nameGroup != null ? nameGroup.getGroupName() : "<none>";
+//    }
 
     public String getStaff() {
         return staff != null ? staff.getSurname() + " " + staff.getFirstname() + " " + staff.getSecondname() : "<none>";

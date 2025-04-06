@@ -2,6 +2,8 @@ package com.itcube.journal.controller;
 
 import com.itcube.journal.dto.students.StudentsRequestDTO;
 import com.itcube.journal.model.Students;
+import com.itcube.journal.service.CourseService;
+import com.itcube.journal.service.GroupsService;
 import com.itcube.journal.service.StudentsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,6 +26,8 @@ import java.util.Map;
 @RequestMapping("/students")
 public class StudentsController {
 
+    private final GroupsService groupsService;
+    private final CourseService courseService;
     private final StudentsService studentsService;
 
     @GetMapping
@@ -37,7 +41,7 @@ public class StudentsController {
         model.addAttribute("filterStudents", filter);
         model.addAttribute("page", page);
         model.addAttribute("url", "/students");
-        model.addAttribute("employees", studentsService.findAll(pageable));
+//        model.addAttribute("employees", studentsService.findAll(pageable));
 
         return "students";
     }
@@ -52,6 +56,8 @@ public class StudentsController {
     @GetMapping("/{studentId}")
     public String studentUpdateForm(@PathVariable Integer studentId, Model model) {
         model.addAttribute("student", studentsService.findById(studentId));
+        model.addAttribute("courses", courseService.findAll());
+        model.addAttribute("groups", groupsService.findAll());
         return "studentsEdit";
     }
 
