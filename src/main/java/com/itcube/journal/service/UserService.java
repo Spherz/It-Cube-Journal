@@ -1,7 +1,7 @@
 package com.itcube.journal.service;
 
 import com.itcube.journal.model.User;
-import com.itcube.journal.repos.UserRepo;
+import com.itcube.journal.repository.UserRepoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,21 +15,17 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
 
-    private final UserRepo userRepo;
+    private final UserRepoRepository userRepoRepository;
 
     List<User> users;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepo.findByUsername(username);
+        return userRepoRepository.findByUsername(username);
     }
 
-    public UserDetails loadByStaffSurname(String staffSurname) throws UsernameNotFoundException {
-        return userRepo.findByStaff_Surname(staffSurname);
-    }
-
-    public Iterable<User> findAll() {
-        return userRepo.findAll();
+    public List<User> findAll() {
+        return userRepoRepository.findAll();
     }
 
     public List<User> findByUserNameOrEmail(String username) {
@@ -41,11 +37,11 @@ public class UserService implements UserDetailsService {
     }
 
     public User save(User user) {
-        return userRepo.save(user);
+        return userRepoRepository.save(user);
     }
 
     public User findOne(String username) {
-        return userRepo.findByUsername(username);
+        return userRepoRepository.findByUsername(username);
     }
 
 }

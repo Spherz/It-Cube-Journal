@@ -1,16 +1,8 @@
 package com.itcube.journal.dto.course;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.itcube.journal.dto.groups.GroupRequestDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
-public class CourseRequestDTO {
-    private String courseName;
-    private List<String> courseGroup = new ArrayList<>();
+public record CourseRequestDTO(String courseName, List<GroupRequestDTO> groups) {
 }

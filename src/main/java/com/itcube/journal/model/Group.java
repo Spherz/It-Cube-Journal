@@ -1,43 +1,62 @@
 package com.itcube.journal.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.proxy.HibernateProxy;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "attendance")
-public class Attendance {
-
+@Table(name = "student_groups")
+public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id")
-    private Student students;
+    private String name;
+
+    private String programName;
+
+    private Integer hours;
+
+    private Integer decreeNumber;
+
+    private LocalDateTime decreeDate = LocalDateTime.now();
+
+    private String educationForm;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_id")
-    private Group groups;
+    @JoinColumn(
+            name = "employee_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "employee_id_FK")
+    )
+    private Employee employee;
 
-    private LocalDate attendanceDate;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    private Course course;
 
-    private String mark;
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    private List<Schedule> schedules = new ArrayList<>();
 
     @Override
     public final boolean equals(Object o) {
@@ -46,8 +65,8 @@ public class Attendance {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Attendance that = (Attendance) o;
-        return getId() != null && Objects.equals(getId(), that.getId());
+        Group group = (Group) o;
+        return getId() != null && Objects.equals(getId(), group.getId());
     }
 
     @Override
