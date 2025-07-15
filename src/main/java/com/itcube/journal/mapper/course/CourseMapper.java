@@ -1,20 +1,20 @@
 package com.itcube.journal.mapper.course;
 
+import com.itcube.journal.dto.course.CourseDTO;
 import com.itcube.journal.dto.course.CourseRequestDTO;
+import com.itcube.journal.dto.course.CourseResponseDTO;
 import com.itcube.journal.model.Course;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 
-@Component
-public class CourseMapper {
+@Mapper(componentModel = "spring")
+public interface CourseMapper {
 
-    public Course mapCourseRequestDTOToCourse(CourseRequestDTO courseRequestDTO) {
-        Course course = new Course();
-        course.setCourseName(courseRequestDTO.getCourseName() == null ? "" : courseRequestDTO.getCourseName());
-        return course;
-    }
+    Course toEntity(CourseRequestDTO courseRequestDTO);
 
-    public Course mapCourseRequestToCourse(Course course, CourseRequestDTO courseRequestDTO) {
-        course.setCourseName(courseRequestDTO.getCourseName() == null ? "" : courseRequestDTO.getCourseName());
-        return course;
-    }
+    CourseResponseDTO toResponseDTO(Course course);
+
+    CourseDTO toDTO(Course course);
+
+    void updateFromDTO(CourseRequestDTO courseRequestDTO, @MappingTarget Course course);
 }
