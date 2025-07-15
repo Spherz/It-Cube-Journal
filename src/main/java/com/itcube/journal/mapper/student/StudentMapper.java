@@ -1,10 +1,11 @@
-package com.itcube.journal.mapper.students;
+package com.itcube.journal.mapper.student;
 
 import com.itcube.journal.dto.student.StudentDTO;
 import com.itcube.journal.dto.student.StudentRequestDTO;
 import com.itcube.journal.dto.student.StudentResponseDTO;
 import com.itcube.journal.model.Student;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface StudentMapper {
@@ -14,4 +15,6 @@ public interface StudentMapper {
     StudentResponseDTO toResponseDTO(Student student);
 
     StudentDTO toDTO(Student student);
+
+    void updateFromDTO(StudentRequestDTO studentRequestDTO, @MappingTarget Student student);
 }
