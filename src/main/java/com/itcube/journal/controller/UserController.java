@@ -1,6 +1,6 @@
 package com.itcube.journal.controller;
 
-import com.itcube.journal.model.Role;
+import com.itcube.journal.enums.Role;
 import com.itcube.journal.model.User;
 import com.itcube.journal.service.UserService;
 import lombok.RequiredArgsConstructor;

@@ -1,9 +1,17 @@
 package com.itcube.journal.model;
 
-import lombok.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.proxy.HibernateProxy;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,10 +19,10 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
-@Table(name = "course")
+@Table(name = "courses")
 public class Course {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,7 +30,17 @@ public class Course {
     private String courseName;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    private List<Groups> groups = new ArrayList<>();
+    private List<Group> groups = new ArrayList<>();
+
+    public void addGroup(Group group) {
+        this.groups.add(group);
+        group.setCourse(this);
+    }
+
+    public void removeGroup(Group group) {
+        this.groups.remove(group);
+        group.setCourse(null);
+    }
 
     @Override
     public final boolean equals(Object o) {
