@@ -1,7 +1,19 @@
-FROM maven:3.6.3-jdk-8-slim
+#------------Build Stage-------------
+FROM maven:3.9.6-eclipse-temurin-21-alpine AS build
 
-WORKDIR /code
+WORKDIR /app
 
 COPY . .
 
-CMD ["./mvnw", "spring-boot:run"]
+RUN mvn clean package -DskipTests
+
+#----------Runtime Stage-------------
+FROM eclipse-temurin:21-jre-alpine
+
+WORKDIR /app
+
+RUN apk add --no-cache wget
+
+COPY --from=build /app/target/*.jar /app/app.jar
+
+CMD ["java", "-jar", "app.jar"]
