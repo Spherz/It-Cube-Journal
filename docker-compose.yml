@@ -9,12 +9,47 @@ services:
       - "5432:5432"
     container_name: db
 
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0.0
+    command:
+      - start
+      - --hostname=https://192.168.50.98:8443
+      - --https-key-store-file=/opt/keycloak/certs/keystore.p12
+      - --https-key-store-password=changeit
+      - --https-key-store-type=PKCS12
+      - --http-enabled=false
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: postgres
+      KC_DB_URL_DATABASE: keycloak
+      KC_DB_USERNAME: admin
+      KC_DB_PASSWORD: 12345
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8443:8443"
+    volumes:
+      - keycloak_data:/opt/keycloak/data
+      - ./certs/keystore.p12:/opt/keycloak/certs/keystore.p12:ro
+    depends_on:
+      - postgres
+
   backend:
     build:
       context: .
       dockerfile: Dockerfile
     env_file:
       - .env
+    environment:
+      JAVA_TOOL_OPTIONS: "-Djavax.net.ssl.trustStore=/app/certs/truststore.jks -Djavax.net.ssl.trustStorePassword=changeit"
+    ports:
+      - "8083:8083"
+    volumes:
+      - ./certs:/app/certs:ro
     container_name: app
     depends_on:
       - postgres
+
+volumes:
+  postgres_data:
+  keycloak_data:
