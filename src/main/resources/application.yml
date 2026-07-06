@@ -1,4 +1,22 @@
 spring:
+  application:
+    name: itcubeservice
+
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            provider: keycloak
+            client-id: ${KC_CLIENT_ID}
+            client-secret: ${KC_CLIENT_SECRET}
+            client-name: ${KC_CLIENT_NAME}
+            authorization-grant-type: authorization_code
+            scope: openid, profile, email
+      resourceserver:
+        jwt:
+          issuer-uri: ${KC_URL}/realms/itcubekld
+
   datasource:
     url: ${DB_URL}
     username: ${DB_USER}
@@ -14,6 +32,18 @@ spring:
     url: ${DB_URL}
     user: ${DB_USER}
     password: ${DB_PASSWORD}
+
+keycloak:
+  url: ${KC_URL}
+  realm: ${KC_REALM}
+  client-id: ${KC_CLIENT_ID}
+  client-secret: ${KC_CLIENT_SECRET}
+
+external:
+  keycloak:
+    token-endpoint: "/realms/${KC_REALM}/protocol/openid-connect/token"
+    revoke-endpoint: "/realms/${KC_REALM}/protocol/openid-connect/revoke"
+    introspect-endpoint: "/realms/${KC_REALM}/protocol/openid-connect/token/introspect"
 
 server:
   port: ${SERVER_PORT}
