@@ -7,4 +7,6 @@ public interface KeycloakClient {
     TokenResponse exchangeTokenByPassword(LoginRequestDto loginRequestDto);
 
     void revokeRefreshToken(String refreshToken);
+
+    TokenResponse exchangeTokenByRefreshToken(String refreshToken);
 }

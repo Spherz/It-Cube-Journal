@@ -49,4 +49,22 @@ public class LoginServiceImpl implements LoginService {
 
         return new MessageResponse("User successfully logged out");
     }
+
+    @Override
+    public MessageResponse refresh(HttpServletRequest request, HttpServletResponse response) {
+        String refreshToken = tokenCookieService.readRefreshToken(request)
+                .orElseThrow(() -> new IllegalStateException("Refresh token cookie is missing"));
+
+        log.info("Refreshing tokens");
+
+        TokenResponse tokenResponse = keycloakClient.exchangeTokenByRefreshToken(refreshToken);
+
+        tokenCookieService.setAuthCookies(
+                response,
+                tokenResponse.access_token(),
+                tokenResponse.refresh_token()
+        );
+
+        return new MessageResponse("Tokens successfully refreshed");
+    }
 }

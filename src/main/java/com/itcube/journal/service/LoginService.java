@@ -10,4 +10,6 @@ public interface LoginService {
     MessageResponse login(LoginRequestDto loginRequestDto, HttpServletResponse response);
 
     MessageResponse logout(HttpServletRequest request, HttpServletResponse response);
+
+    MessageResponse refresh(HttpServletRequest request, HttpServletResponse response);
 }

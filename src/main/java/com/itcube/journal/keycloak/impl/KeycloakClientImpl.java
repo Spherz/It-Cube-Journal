@@ -37,6 +37,20 @@ public class KeycloakClientImpl implements KeycloakClient {
     }
 
     @Override
+    public TokenResponse exchangeTokenByRefreshToken(String refreshToken) {
+        MultiValueMap<String, String> formData = keycloakRequestFactory.buildRefreshGrantForm(refreshToken);
+
+        ResponseEntity<TokenResponse> response = restClient.post()
+                .uri(keycloakRequestFactory.tokenEndpoint())
+                .body(formData)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .retrieve()
+                .toEntity(TokenResponse.class);
+
+        return response.getBody();
+    }
+
+    @Override
     public void revokeRefreshToken(String refreshToken) {
         MultiValueMap<String, String> formData = keycloakRequestFactory.buildRevokeForm(refreshToken);
 
