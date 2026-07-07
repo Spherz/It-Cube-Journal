@@ -1,0 +1,594 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1779529368887-1
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: attendance
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_attendance
+              - column:
+                  name: student_id
+                  type: BIGINT
+              - column:
+                  name: group_id
+                  type: BIGINT
+              - column:
+                  name: attendance_date
+                  type: DATE
+              - column:
+                  name: mark
+                  type: VARCHAR(255)
+  - changeSet:
+      id: 1779529368887-2
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: attendance_dates
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_attendance_dates
+              - column:
+                  name: lesson_date
+                  type: DATE
+              - column:
+                  name: group_id
+                  type: BIGINT
+  - changeSet:
+      id: 1779529368887-3
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: courses
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_courses
+              - column:
+                  name: course_name
+                  type: VARCHAR(255)
+  - changeSet:
+      id: 1779529368887-4
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: employees
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_employees
+              - column:
+                  name: nickname
+                  type: BIGINT
+              - column:
+                  name: firstname
+                  type: VARCHAR(255)
+              - column:
+                  name: surname
+                  type: VARCHAR(255)
+              - column:
+                  name: patronymic
+                  type: VARCHAR(255)
+              - column:
+                  name: birth_date
+                  type: DATETIME
+              - column:
+                  name: education
+                  type: VARCHAR(255)
+              - column:
+                  name: diploma_number
+                  type: INT
+              - column:
+                  name: qualification
+                  type: VARCHAR(255)
+  - changeSet:
+      id: 1779529368887-5
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: schedule
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_schedule
+              - column:
+                  name: day_of_week
+                  type: SMALLINT
+              - column:
+                  name: start_time
+                  type: TIME
+              - column:
+                  name: end_time
+                  type: TIME
+              - column:
+                  name: group_id
+                  type: BIGINT
+  - changeSet:
+      id: 1779529368887-6
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: schedule_attendance_dates
+            columns:
+              - column:
+                  name: schedule_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: attendance_dates_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 1779529368887-7
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: student_groups
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_student_groups
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: program_name
+                  type: VARCHAR(255)
+              - column:
+                  name: hours
+                  type: INT
+              - column:
+                  name: decree_number
+                  type: INT
+              - column:
+                  name: decree_date
+                  type: DATETIME
+              - column:
+                  name: education_form
+                  type: VARCHAR(255)
+              - column:
+                  name: employee_id
+                  type: BIGINT
+              - column:
+                  name: course_id
+                  type: BIGINT
+  - changeSet:
+      id: 1779529368887-8
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: students
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_students
+              - column:
+                  name: group_id
+                  type: BIGINT
+              - column:
+                  name: id_course
+                  type: BIGINT
+              - column:
+                  name: employee_id
+                  type: BIGINT
+              - column:
+                  name: firstname
+                  type: VARCHAR(255)
+              - column:
+                  name: date_of_birth
+                  type: DATE
+              - column:
+                  name: certificate_number
+                  type: VARCHAR(255)
+              - column:
+                  name: parent
+                  type: VARCHAR(255)
+              - column:
+                  name: surname
+                  type: VARCHAR(255)
+              - column:
+                  name: patronymic
+                  type: VARCHAR(255)
+              - column:
+                  name: student_class
+                  type: VARCHAR(255)
+              - column:
+                  name: school
+                  type: VARCHAR(255)
+              - column:
+                  name: phone_number
+                  type: VARCHAR(255)
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+  - changeSet:
+      id: 1779529368887-9
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: thematic_planning
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_thematic_planning
+              - column:
+                  name: theme_name
+                  type: VARCHAR(255)
+              - column:
+                  name: employee_id
+                  type: BIGINT
+              - column:
+                  name: course
+                  type: VARCHAR(255)
+              - column:
+                  name: total_hours
+                  type: VARCHAR(255)
+              - column:
+                  name: user_id
+                  type: BIGINT
+  - changeSet:
+      id: 1779529368887-10
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: themes
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_themes
+              - column:
+                  name: date
+                  type: VARCHAR(255)
+              - column:
+                  name: hours_count
+                  type: VARCHAR(255)
+              - column:
+                  name: theme_name
+                  type: VARCHAR(255)
+              - column:
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  name: group_id
+                  type: BIGINT
+  - changeSet:
+      id: 1779529368887-11
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: user_role
+            columns:
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: roles
+                  type: VARCHAR(255)
+  - changeSet:
+      id: 1779529368887-12
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_users
+              - column:
+                  name: employee_id
+                  type: BIGINT
+              - column:
+                  name: theme_id
+                  type: BIGINT
+              - column:
+                  name: themes_id
+                  type: BIGINT
+              - column:
+                  name: username
+                  type: VARCHAR(255)
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+              - column:
+                  name: active
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 1779529368887-13
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: attendance_dates_id
+            constraintName: uc_schedule_attendance_dates_attendancedates
+            tableName: schedule_attendance_dates
+  - changeSet:
+      id: 1779529368887-14
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: employee_id
+            baseTableName: student_groups
+            constraintName: EMPLOYEE_ID_FK
+            referencedColumnNames: id
+            referencedTableName: employees
+  - changeSet:
+      id: 1779529368887-15
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: group_id
+            baseTableName: attendance_dates
+            constraintName: FK_ATTENDANCE_DATES_ON_GROUP
+            referencedColumnNames: id
+            referencedTableName: student_groups
+  - changeSet:
+      id: 1779529368887-16
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: group_id
+            baseTableName: attendance
+            constraintName: FK_ATTENDANCE_ON_GROUP
+            referencedColumnNames: id
+            referencedTableName: student_groups
+  - changeSet:
+      id: 1779529368887-17
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: student_id
+            baseTableName: attendance
+            constraintName: FK_ATTENDANCE_ON_STUDENT
+            referencedColumnNames: id
+            referencedTableName: students
+  - changeSet:
+      id: 1779529368887-18
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: nickname
+            baseTableName: employees
+            constraintName: FK_EMPLOYEES_ON_NICKNAME
+            referencedColumnNames: id
+            referencedTableName: users
+  - changeSet:
+      id: 1779529368887-19
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: group_id
+            baseTableName: schedule
+            constraintName: FK_SCHEDULE_ON_GROUP
+            referencedColumnNames: id
+            referencedTableName: student_groups
+  - changeSet:
+      id: 1779529368887-20
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: employee_id
+            baseTableName: students
+            constraintName: FK_STUDENTS_ON_EMPLOYEE
+            referencedColumnNames: id
+            referencedTableName: employees
+  - changeSet:
+      id: 1779529368887-21
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: group_id
+            baseTableName: students
+            constraintName: FK_STUDENTS_ON_GROUP
+            referencedColumnNames: id
+            referencedTableName: student_groups
+  - changeSet:
+      id: 1779529368887-22
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: id_course
+            baseTableName: students
+            constraintName: FK_STUDENTS_ON_ID_COURSE
+            referencedColumnNames: id
+            referencedTableName: courses
+  - changeSet:
+      id: 1779529368887-23
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: course_id
+            baseTableName: student_groups
+            constraintName: FK_STUDENT_GROUPS_ON_COURSE
+            referencedColumnNames: id
+            referencedTableName: courses
+  - changeSet:
+      id: 1779529368887-24
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: employee_id
+            baseTableName: thematic_planning
+            constraintName: FK_THEMATIC_PLANNING_ON_EMPLOYEE
+            referencedColumnNames: id
+            referencedTableName: employees
+  - changeSet:
+      id: 1779529368887-25
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: thematic_planning
+            constraintName: FK_THEMATIC_PLANNING_ON_USER
+            referencedColumnNames: id
+            referencedTableName: users
+  - changeSet:
+      id: 1779529368887-26
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: group_id
+            baseTableName: themes
+            constraintName: FK_THEMES_ON_GROUP
+            referencedColumnNames: id
+            referencedTableName: student_groups
+  - changeSet:
+      id: 1779529368887-27
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: themes
+            constraintName: FK_THEMES_ON_USER
+            referencedColumnNames: id
+            referencedTableName: users
+  - changeSet:
+      id: 1779529368887-28
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: employee_id
+            baseTableName: users
+            constraintName: FK_USERS_ON_EMPLOYEE
+            referencedColumnNames: id
+            referencedTableName: employees
+  - changeSet:
+      id: 1779529368887-29
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: theme_id
+            baseTableName: users
+            constraintName: FK_USERS_ON_THEME
+            referencedColumnNames: id
+            referencedTableName: thematic_planning
+  - changeSet:
+      id: 1779529368887-30
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: themes_id
+            baseTableName: users
+            constraintName: FK_USERS_ON_THEMES
+            referencedColumnNames: id
+            referencedTableName: themes
+  - changeSet:
+      id: 1779529368887-31
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: attendance_dates_id
+            baseTableName: schedule_attendance_dates
+            constraintName: fk_schattdat_on_attendance_date
+            referencedColumnNames: id
+            referencedTableName: attendance_dates
+  - changeSet:
+      id: 1779529368887-32
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: schedule_id
+            baseTableName: schedule_attendance_dates
+            constraintName: fk_schattdat_on_schedule
+            referencedColumnNames: id
+            referencedTableName: schedule
+  - changeSet:
+      id: 1779529368887-33
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: user_role
+            constraintName: fk_user_role_on_user
+            referencedColumnNames: id
+            referencedTableName: users
