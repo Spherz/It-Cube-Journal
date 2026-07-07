@@ -2,9 +2,12 @@ package com.itcube.journal.service.impl;
 
 import com.itcube.journal.dto.student.StudentRequestDTO;
 import com.itcube.journal.dto.student.StudentResponseDTO;
+import com.itcube.journal.exceptions.GroupNotFoundException;
 import com.itcube.journal.exceptions.StudentNotFoundException;
 import com.itcube.journal.mapper.student.StudentMapper;
+import com.itcube.journal.model.Group;
 import com.itcube.journal.model.Student;
+import com.itcube.journal.repository.GroupRepository;
 import com.itcube.journal.repository.StudentRepository;
 import com.itcube.journal.service.StudentService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +23,7 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentMapper studentMapper;
     private final StudentRepository studentRepository;
+    private final GroupRepository groupRepository;
 
     @Override
     public List<StudentResponseDTO> findAllStudents() {
@@ -41,6 +45,12 @@ public class StudentServiceImpl implements StudentService {
 
         Student savedStudent = studentMapper.toEntity(studentRequestDTO);
 
+        if (studentRequestDTO.groupId() != null) {
+            Group group = groupRepository.findById(studentRequestDTO.groupId())
+                    .orElseThrow(() -> new GroupNotFoundException("Unable to find group with id: " + studentRequestDTO.groupId()));
+            savedStudent.setGroup(group);
+        }
+
         savedStudent = studentRepository.save(savedStudent);
 
         return studentMapper.toResponseDTO(savedStudent);
@@ -52,6 +62,14 @@ public class StudentServiceImpl implements StudentService {
                 .orElseThrow(() -> new StudentNotFoundException("Unable to find student with id: " + id));
 
         studentMapper.updateFromDTO(studentRequestDTO, updatedStudent);
+
+        if (studentRequestDTO.groupId() != null) {
+            Group group = groupRepository.findById(studentRequestDTO.groupId())
+                    .orElseThrow(() -> new GroupNotFoundException("Unable to find group with id: " + studentRequestDTO.groupId()));
+            updatedStudent.setGroup(group);
+        } else {
+            updatedStudent.setGroup(null);
+        }
 
         updatedStudent = studentRepository.save(updatedStudent);
 

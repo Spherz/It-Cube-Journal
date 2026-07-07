@@ -15,5 +15,6 @@ public record StudentRequestDTO(
     String studentClass,
     String school,
     String phoneNumber,
-    String email){
+    String email,
+    Long groupId){
 }

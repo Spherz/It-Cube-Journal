@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1751875200000-2
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            tableName: student_groups
+            columnName: program_name

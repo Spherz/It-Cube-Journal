@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/changelog/ddl/2026/05/23-01-ddl.yaml
+  - include:
+      file: db/changelog/ddl/2026/07/07-01-ddl.yaml
