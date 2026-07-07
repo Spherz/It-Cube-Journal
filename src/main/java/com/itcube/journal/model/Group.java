@@ -33,8 +33,6 @@ public class Group {
 
     private String name;
 
-    private String programName;
-
     private Integer hours;
 
     private Integer decreeNumber;
@@ -57,6 +55,19 @@ public class Group {
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Schedule> schedules = new ArrayList<>();
+
+    @OneToMany(mappedBy = "group")
+    private List<Student> students = new ArrayList<>();
+
+    public void addStudent(Student student) {
+        this.students.add(student);
+        student.setGroup(this);
+    }
+
+    public void removeStudent(Student student) {
+        this.students.remove(student);
+        student.setGroup(null);
+    }
 
     @Override
     public final boolean equals(Object o) {

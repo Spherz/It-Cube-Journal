@@ -16,5 +16,7 @@ public record StudentResponseDTO(
         String studentClass,
         String school,
         String phoneNumber,
-        String email){
+        String email,
+        Long groupId,
+        String groupName){
 }
