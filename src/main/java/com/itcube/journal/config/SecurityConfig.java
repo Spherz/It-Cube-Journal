@@ -42,6 +42,7 @@ public class SecurityConfig {
                 auth
                         .requestMatchers("/v2/auth/login",
                                 "/v2/auth/logout",
+                                "/v2/auth/refresh",
                                 "/v2/auth/code").permitAll()
                         .anyRequest().authenticated();
             })

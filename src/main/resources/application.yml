@@ -27,7 +27,7 @@ spring:
       ddl-auto: none
 
   liquibase:
-    change-log: classpath:/db/changelog/db.changelog-master.xml
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
     enabled: true
     url: ${DB_URL}
     user: ${DB_USER}

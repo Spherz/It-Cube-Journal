@@ -52,6 +52,18 @@ public class DefaultKeycloakRequestFactory implements KeycloakRequestFactory {
     }
 
     @Override
+    public MultiValueMap<String, String> buildRefreshGrantForm(String refreshToken) {
+        MultiValueMap<String, String> form = new LinkedMultiValueMap<>();
+
+        form.add("grant_type", "refresh_token");
+        form.add("refresh_token", refreshToken);
+        form.add("client_id", keycloakProperties.getClientId());
+        form.add("client_secret", keycloakProperties.getClientSecret());
+
+        return form;
+    }
+
+    @Override
     public String tokenEndpoint() {
         return keycloakTokenEndpoint;
     }

@@ -8,6 +8,8 @@ public interface KeycloakRequestFactory {
 
     MultiValueMap<String, String> buildRevokeForm(String refreshToken);
 
+    MultiValueMap<String, String> buildRefreshGrantForm(String refreshToken);
+
     String tokenEndpoint();
 
     String introspectEndpoint();
