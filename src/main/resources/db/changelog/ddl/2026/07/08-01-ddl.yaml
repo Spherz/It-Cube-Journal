@@ -1,0 +1,153 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1783900800100-1
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: user_role
+            constraintName: fk_user_role_on_user
+  - changeSet:
+      id: 1783900800100-2
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropTable:
+            tableName: user_role
+  - changeSet:
+      id: 1783900800100-3
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: users
+            constraintName: FK_USERS_ON_EMPLOYEE
+  - changeSet:
+      id: 1783900800100-4
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: users
+            constraintName: FK_USERS_ON_THEME
+  - changeSet:
+      id: 1783900800100-5
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: users
+            constraintName: FK_USERS_ON_THEMES
+  - changeSet:
+      id: 1783900800100-6
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: employees
+            constraintName: FK_EMPLOYEES_ON_NICKNAME
+  - changeSet:
+      id: 1783900800100-7
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: students
+            constraintName: FK_STUDENTS_ON_EMPLOYEE
+  - changeSet:
+      id: 1783900800100-8
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: thematic_planning
+            constraintName: FK_THEMATIC_PLANNING_ON_EMPLOYEE
+  - changeSet:
+      id: 1783900800100-9
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: thematic_planning
+            constraintName: FK_THEMATIC_PLANNING_ON_USER
+  - changeSet:
+      id: 1783900800100-10
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: themes
+            constraintName: FK_THEMES_ON_USER
+  - changeSet:
+      id: 1783900800100-11
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: student_groups
+            constraintName: EMPLOYEE_ID_FK
+  - changeSet:
+      id: 1783900800100-12
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            tableName: students
+            columnName: employee_id
+  - changeSet:
+      id: 1783900800100-13
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            tableName: thematic_planning
+            columnName: employee_id
+  - changeSet:
+      id: 1783900800100-14
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            tableName: thematic_planning
+            columnName: user_id
+  - changeSet:
+      id: 1783900800100-15
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            tableName: themes
+            columnName: user_id
+  - changeSet:
+      id: 1783900800100-16
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            tableName: student_groups
+            columnName: employee_id
+  - changeSet:
+      id: 1783900800100-17
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            tableName: student_groups
+            columns:
+              - column:
+                  name: employee_sub
+                  type: VARCHAR(255)
+  - changeSet:
+      id: 1783900800100-18
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropTable:
+            tableName: employees
+  - changeSet:
+      id: 1783900800100-19
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropTable:
+            tableName: users

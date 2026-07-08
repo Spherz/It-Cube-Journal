@@ -14,4 +14,8 @@ public interface GroupService {
     GroupResponseDTO createGroup(GroupRequestDTO groupRequestDTO);
 
     GroupResponseDTO updateGroup(Long id, GroupRequestDTO groupRequestDTO);
+
+    GroupResponseDTO assignTeacher(Long id, String employeeSub);
+
+    List<GroupResponseDTO> findGroupsByEmployeeSub(String employeeSub);
 }

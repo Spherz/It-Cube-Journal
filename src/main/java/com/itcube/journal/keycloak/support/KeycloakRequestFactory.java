@@ -10,6 +10,8 @@ public interface KeycloakRequestFactory {
 
     MultiValueMap<String, String> buildRefreshGrantForm(String refreshToken);
 
+    MultiValueMap<String, String> buildClientCredentialsForm();
+
     String tokenEndpoint();
 
     String introspectEndpoint();

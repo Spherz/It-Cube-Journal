@@ -38,10 +38,6 @@ public class Student {
     @JsonBackReference
     private Course course;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
-
     private String firstname;
 
     private LocalDate dateOfBirth;

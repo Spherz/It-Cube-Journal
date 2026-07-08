@@ -4,6 +4,8 @@ import com.itcube.journal.dto.groups.GroupRequestDTO;
 import com.itcube.journal.dto.groups.GroupResponseDTO;
 import com.itcube.journal.exceptions.CourseNotFoundException;
 import com.itcube.journal.exceptions.GroupNotFoundException;
+import com.itcube.journal.exceptions.InvalidTeacherAssignmentException;
+import com.itcube.journal.keycloak.admin.KeycloakAdminClient;
 import com.itcube.journal.mapper.group.GroupMapper;
 import com.itcube.journal.model.Course;
 import com.itcube.journal.model.Group;
@@ -24,10 +26,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GroupServiceImpl implements GroupService {
 
+    private static final String TEACHER_ROLE = "TEACHER";
+
     private final GroupMapper groupMapper;
     private final GroupRepository groupRepository;
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
+    private final KeycloakAdminClient keycloakAdminClient;
 
     @Override
     public List<GroupResponseDTO> findAllGroups() {
@@ -105,5 +110,28 @@ public class GroupServiceImpl implements GroupService {
         Group updatedGroup = groupRepository.save(group);
 
         return groupMapper.toResponseDTO(updatedGroup);
+    }
+
+    @Override
+    public GroupResponseDTO assignTeacher(Long id, String employeeSub) {
+        Group group = groupRepository.findById(id)
+                .orElseThrow(() -> new GroupNotFoundException("Unable to find group with id: " + id));
+
+        if (!keycloakAdminClient.userHasRealmRole(employeeSub, TEACHER_ROLE)) {
+            throw new InvalidTeacherAssignmentException(
+                    "User with sub " + employeeSub + " does not hold the TEACHER role");
+        }
+
+        group.setEmployeeSub(employeeSub);
+        Group updatedGroup = groupRepository.save(group);
+
+        return groupMapper.toResponseDTO(updatedGroup);
+    }
+
+    @Override
+    public List<GroupResponseDTO> findGroupsByEmployeeSub(String employeeSub) {
+        return groupRepository.findByEmployeeSub(employeeSub).stream()
+                .map(groupMapper::toResponseDTO)
+                .toList();
     }
 }
