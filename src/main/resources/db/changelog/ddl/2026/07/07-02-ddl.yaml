@@ -1,0 +1,129 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1751875200100-1
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: schedule_attendance_dates
+            constraintName: fk_schattdat_on_attendance_date
+  - changeSet:
+      id: 1751875200100-2
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: schedule_attendance_dates
+            constraintName: fk_schattdat_on_schedule
+  - changeSet:
+      id: 1751875200100-3
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropTable:
+            tableName: schedule_attendance_dates
+  - changeSet:
+      id: 1751875200100-4
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: attendance_dates
+            constraintName: FK_ATTENDANCE_DATES_ON_GROUP
+  - changeSet:
+      id: 1751875200100-5
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropTable:
+            tableName: attendance_dates
+  - changeSet:
+      id: 1751875200100-6
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            tableName: schedule
+            columnName: day_of_week
+  - changeSet:
+      id: 1751875200100-7
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            tableName: schedule
+            columns:
+              - column:
+                  name: academic_year_start
+                  type: DATE
+              - column:
+                  name: academic_year_end
+                  type: DATE
+              - column:
+                  name: lessons_per_week
+                  type: INT
+  - changeSet:
+      id: 1751875200100-8
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: schedule_days_of_week
+            columns:
+              - column:
+                  name: schedule_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: day_of_week
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 1751875200100-9
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: schedule_id
+            baseTableName: schedule_days_of_week
+            constraintName: FK_SCHEDULE_DAYS_OF_WEEK_ON_SCHEDULE
+            referencedColumnNames: id
+            referencedTableName: schedule
+  - changeSet:
+      id: 1751875200100-10
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: schedule_exceptions
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_schedule_exceptions
+              - column:
+                  name: schedule_id
+                  type: BIGINT
+              - column:
+                  name: exception_date
+                  type: DATE
+              - column:
+                  name: reason
+                  type: VARCHAR(255)
+  - changeSet:
+      id: 1751875200100-11
+      author: SpherZ
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: schedule_id
+            baseTableName: schedule_exceptions
+            constraintName: FK_SCHEDULE_EXCEPTIONS_ON_SCHEDULE
+            referencedColumnNames: id
+            referencedTableName: schedule
