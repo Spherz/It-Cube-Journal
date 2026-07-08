@@ -11,6 +11,8 @@ public interface StudentService {
 
     StudentResponseDTO findStudentById(Long id);
 
+    List<StudentResponseDTO> findStudentsByGroupId(Long groupId);
+
     StudentResponseDTO createStudent(StudentRequestDTO studentRequestDTO);
 
     StudentResponseDTO updateStudent(Long id, StudentRequestDTO studentRequestDTO);

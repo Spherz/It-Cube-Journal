@@ -32,6 +32,11 @@ public class StudentController {
         return ResponseEntity.ok(studentService.findStudentById(id));
     }
 
+    @GetMapping("/group/{groupId}")
+    public ResponseEntity<List<StudentResponseDTO>> findStudentsByGroupId(@PathVariable Long groupId) {
+        return ResponseEntity.ok(studentService.findStudentsByGroupId(groupId));
+    }
+
     @PostMapping
     public ResponseEntity<StudentResponseDTO> createStudent(
             @RequestBody StudentRequestDTO studentRequestDTO) {

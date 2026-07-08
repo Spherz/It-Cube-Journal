@@ -41,6 +41,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public List<StudentResponseDTO> findStudentsByGroupId(Long groupId) {
+        return studentRepository.findByGroupId(groupId).stream()
+                .map(studentMapper::toResponseDTO)
+                .toList();
+    }
+
+    @Override
     public StudentResponseDTO createStudent(StudentRequestDTO studentRequestDTO) {
 
         Student savedStudent = studentMapper.toEntity(studentRequestDTO);

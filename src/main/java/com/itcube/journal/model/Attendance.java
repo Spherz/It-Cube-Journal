@@ -1,6 +1,9 @@
 package com.itcube.journal.model;
 
+import com.itcube.journal.enums.AttendanceMark;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,7 +40,8 @@ public class Attendance {
 
     private LocalDate attendanceDate;
 
-    private String mark;
+    @Enumerated(EnumType.STRING)
+    private AttendanceMark mark;
 
     @Override
     public final boolean equals(Object o) {

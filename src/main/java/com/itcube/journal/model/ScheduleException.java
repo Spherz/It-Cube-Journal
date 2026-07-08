@@ -1,6 +1,7 @@
 package com.itcube.journal.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,18 +20,20 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "attendance_dates")
-public class AttendanceDate {
+@Table(name = "schedule_exceptions")
+public class ScheduleException {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate lessonDate;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "schedule_id")
+    private Schedule schedule;
 
-    @ManyToOne
-    @JoinColumn(name = "group_id")
-    private Group group;
+    private LocalDate exceptionDate;
+
+    private String reason;
 
     @Override
     public final boolean equals(Object o) {
@@ -39,7 +42,7 @@ public class AttendanceDate {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        AttendanceDate that = (AttendanceDate) o;
+        ScheduleException that = (ScheduleException) o;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
 
