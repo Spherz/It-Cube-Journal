@@ -1,9 +1,10 @@
 package com.itcube.journal.keycloak.admin.impl;
 
-import com.itcube.journal.config.KeycloakProperties;
 import com.itcube.journal.dto.auth.TokenResponse;
 import com.itcube.journal.dto.teacher.TeacherDTO;
 import com.itcube.journal.keycloak.admin.KeycloakAdminClient;
+import com.itcube.journal.keycloak.admin.dto.KeycloakRoleRepresentationDTO;
+import com.itcube.journal.keycloak.admin.dto.KeycloakUserRepresentationDTO;
 import com.itcube.journal.keycloak.support.KeycloakRequestFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,18 +25,17 @@ public class KeycloakAdminClientImpl implements KeycloakAdminClient {
 
     private final RestClient restClient;
     private final KeycloakRequestFactory keycloakRequestFactory;
-    private final KeycloakProperties keycloakProperties;
 
     private volatile String cachedAccessToken;
     private volatile Instant tokenExpiresAt = Instant.EPOCH;
 
     @Override
     public List<TeacherDTO> findUsersWithRealmRole(String roleName) {
-        KeycloakUserRepresentation[] users = restClient.get()
-                .uri(adminRealmPath() + "/roles/{roleName}/users", roleName)
+        KeycloakUserRepresentationDTO[] users = restClient.get()
+                .uri(keycloakRequestFactory.adminUsersByRoleEndpoint(), roleName)
                 .header("Authorization", "Bearer " + accessToken())
                 .retrieve()
-                .body(KeycloakUserRepresentation[].class);
+                .body(KeycloakUserRepresentationDTO[].class);
 
         if (users == null) {
             return List.of();
@@ -47,11 +47,11 @@ public class KeycloakAdminClientImpl implements KeycloakAdminClient {
     @Override
     public Optional<TeacherDTO> findUserById(String userId) {
         try {
-            KeycloakUserRepresentation user = restClient.get()
-                    .uri(adminRealmPath() + "/users/{id}", userId)
+            KeycloakUserRepresentationDTO user = restClient.get()
+                    .uri(keycloakRequestFactory.adminUserByIdEndpoint(), userId)
                     .header("Authorization", "Bearer " + accessToken())
                     .retrieve()
-                    .body(KeycloakUserRepresentation.class);
+                    .body(KeycloakUserRepresentationDTO.class);
 
             return Optional.ofNullable(user).map(this::toTeacherDTO);
         } catch (HttpClientErrorException.NotFound e) {
@@ -62,11 +62,11 @@ public class KeycloakAdminClientImpl implements KeycloakAdminClient {
     @Override
     public boolean userHasRealmRole(String userId, String roleName) {
         try {
-            KeycloakRoleRepresentation[] roles = restClient.get()
-                    .uri(adminRealmPath() + "/users/{id}/role-mappings/realm/composite", userId)
+            KeycloakRoleRepresentationDTO[] roles = restClient.get()
+                    .uri(keycloakRequestFactory.adminUserRoleMappingsEndpoint(), userId)
                     .header("Authorization", "Bearer " + accessToken())
                     .retrieve()
-                    .body(KeycloakRoleRepresentation[].class);
+                    .body(KeycloakRoleRepresentationDTO[].class);
 
             if (roles == null) {
                 return false;
@@ -95,11 +95,7 @@ public class KeycloakAdminClientImpl implements KeycloakAdminClient {
         return cachedAccessToken;
     }
 
-    private String adminRealmPath() {
-        return "/admin/realms/" + keycloakProperties.getRealm();
-    }
-
-    private TeacherDTO toTeacherDTO(KeycloakUserRepresentation user) {
+    private TeacherDTO toTeacherDTO(KeycloakUserRepresentationDTO user) {
         return new TeacherDTO(
                 user.id(),
                 user.username(),
@@ -124,12 +120,5 @@ public class KeycloakAdminClientImpl implements KeycloakAdminClient {
 
     private Integer asInteger(String value) {
         return value == null ? null : Integer.valueOf(value);
-    }
-
-    private record KeycloakUserRepresentation(String id, String username, String email, String firstName,
-                                               String lastName, Map<String, List<String>> attributes) {
-    }
-
-    private record KeycloakRoleRepresentation(String id, String name) {
     }
 }

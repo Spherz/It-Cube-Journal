@@ -2,6 +2,7 @@ package com.itcube.journal.service.impl;
 
 import com.itcube.journal.dto.groups.GroupRequestDTO;
 import com.itcube.journal.dto.groups.GroupResponseDTO;
+import com.itcube.journal.enums.Role;
 import com.itcube.journal.exceptions.CourseNotFoundException;
 import com.itcube.journal.exceptions.GroupNotFoundException;
 import com.itcube.journal.exceptions.InvalidTeacherAssignmentException;
@@ -25,8 +26,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class GroupServiceImpl implements GroupService {
-
-    private static final String TEACHER_ROLE = "TEACHER";
 
     private final GroupMapper groupMapper;
     private final GroupRepository groupRepository;
@@ -117,7 +116,7 @@ public class GroupServiceImpl implements GroupService {
         Group group = groupRepository.findById(id)
                 .orElseThrow(() -> new GroupNotFoundException("Unable to find group with id: " + id));
 
-        if (!keycloakAdminClient.userHasRealmRole(employeeSub, TEACHER_ROLE)) {
+        if (!keycloakAdminClient.userHasRealmRole(employeeSub, Role.TEACHER.name())) {
             throw new InvalidTeacherAssignmentException(
                     "User with sub " + employeeSub + " does not hold the TEACHER role");
         }

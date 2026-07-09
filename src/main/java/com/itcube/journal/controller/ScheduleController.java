@@ -6,6 +6,7 @@ import com.itcube.journal.dto.schedule.ScheduleResponseDTO;
 import com.itcube.journal.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -26,27 +27,32 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
 
     @GetMapping
+    @PreAuthorize("hasRole('journal.schedule_viewer')")
     public ResponseEntity<List<ScheduleResponseDTO>> getAllSchedules() {
         return ResponseEntity.ok(scheduleService.findAllSchedules());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('journal.schedule_viewer')")
     public ResponseEntity<ScheduleResponseDTO> getScheduleById(@PathVariable Long id) {
         return ResponseEntity.ok(scheduleService.findScheduleById(id));
     }
 
     @GetMapping("/group/{groupId}")
+    @PreAuthorize("hasRole('journal.schedule_viewer')")
     public ResponseEntity<List<ScheduleResponseDTO>> getSchedulesByGroupId(@PathVariable Long groupId) {
         return ResponseEntity.ok(scheduleService.findSchedulesByGroupId(groupId));
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('journal.schedule_creator')")
     public ResponseEntity<ScheduleResponseDTO> createSchedule(
             @RequestBody ScheduleRequestDTO scheduleRequestDTO) {
         return ResponseEntity.ok(scheduleService.createSchedule(scheduleRequestDTO));
     }
 
     @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('journal.schedule_editor')")
     public ResponseEntity<ScheduleResponseDTO> updateSchedule(
             @PathVariable Long id,
             @RequestBody ScheduleRequestDTO scheduleRequestDTO) {
@@ -54,17 +60,20 @@ public class ScheduleController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('journal.schedule_editor')")
     public ResponseEntity<Void> deleteSchedule(@PathVariable Long id) {
         scheduleService.deleteSchedule(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}/lesson-dates")
+    @PreAuthorize("hasRole('journal.schedule_viewer')")
     public ResponseEntity<List<LocalDate>> getLessonDates(@PathVariable Long id) {
         return ResponseEntity.ok(scheduleService.getLessonDates(id));
     }
 
     @PostMapping("/{id}/exceptions")
+    @PreAuthorize("hasRole('journal.schedule_editor')")
     public ResponseEntity<ScheduleResponseDTO> cancelLesson(
             @PathVariable Long id,
             @RequestBody ScheduleExceptionRequestDTO scheduleExceptionRequestDTO) {
@@ -72,6 +81,7 @@ public class ScheduleController {
     }
 
     @DeleteMapping("/{id}/exceptions/{exceptionId}")
+    @PreAuthorize("hasRole('journal.schedule_editor')")
     public ResponseEntity<ScheduleResponseDTO> restoreLesson(
             @PathVariable Long id,
             @PathVariable Long exceptionId) {

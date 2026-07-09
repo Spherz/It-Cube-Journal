@@ -1,6 +1,7 @@
 package com.itcube.journal.controller;
 
 import com.itcube.journal.dto.teacher.TeacherDTO;
+import com.itcube.journal.enums.Role;
 import com.itcube.journal.keycloak.admin.KeycloakAdminClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +17,11 @@ import java.util.List;
 @RequestMapping("/api/v1/teachers")
 public class TeacherController {
 
-    private static final String TEACHER_ROLE = "TEACHER";
-
     private final KeycloakAdminClient keycloakAdminClient;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('GROUP_TEACHER_ASSIGN')")
+    @PreAuthorize("hasAnyRole('methodist', 'admin')")
     public ResponseEntity<List<TeacherDTO>> getAllTeachers() {
-        return ResponseEntity.ok(keycloakAdminClient.findUsersWithRealmRole(TEACHER_ROLE));
+        return ResponseEntity.ok(keycloakAdminClient.findUsersWithRealmRole(Role.TEACHER.name()));
     }
 }

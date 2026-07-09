@@ -17,4 +17,10 @@ public interface KeycloakRequestFactory {
     String introspectEndpoint();
 
     String revokeEndpoint();
+
+    String adminUsersByRoleEndpoint();
+
+    String adminUserByIdEndpoint();
+
+    String adminUserRoleMappingsEndpoint();
 }

@@ -5,6 +5,7 @@ import com.itcube.journal.dto.student.StudentResponseDTO;
 import com.itcube.journal.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,27 +24,32 @@ public class StudentController {
     private final StudentService studentService;
 
     @GetMapping
+    @PreAuthorize("hasRole('journal.student_viewer')")
     public ResponseEntity<List<StudentResponseDTO>> findAllStudents() {
         return ResponseEntity.ok(studentService.findAllStudents());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('journal.student_viewer')")
     public ResponseEntity<StudentResponseDTO> findStudentById(@PathVariable Long id) {
         return ResponseEntity.ok(studentService.findStudentById(id));
     }
 
     @GetMapping("/group/{groupId}")
+    @PreAuthorize("hasRole('journal.student_viewer')")
     public ResponseEntity<List<StudentResponseDTO>> findStudentsByGroupId(@PathVariable Long groupId) {
         return ResponseEntity.ok(studentService.findStudentsByGroupId(groupId));
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('journal.student_creator')")
     public ResponseEntity<StudentResponseDTO> createStudent(
             @RequestBody StudentRequestDTO studentRequestDTO) {
         return ResponseEntity.ok(studentService.createStudent(studentRequestDTO));
     }
 
     @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('journal.student_editor')")
     public ResponseEntity<StudentResponseDTO> updateStudent(
             @PathVariable Long id,
             @RequestBody StudentRequestDTO studentRequestDTO) {
