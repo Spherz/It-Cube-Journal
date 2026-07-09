@@ -44,6 +44,10 @@ external:
     token-endpoint: "/realms/${KC_REALM}/protocol/openid-connect/token"
     revoke-endpoint: "/realms/${KC_REALM}/protocol/openid-connect/revoke"
     introspect-endpoint: "/realms/${KC_REALM}/protocol/openid-connect/token/introspect"
+    admin:
+      users-by-role-endpoint: "/admin/realms/${KC_REALM}/roles/{roleName}/users"
+      user-by-id-endpoint: "/admin/realms/${KC_REALM}/users/{id}"
+      user-role-mappings-endpoint: "/admin/realms/${KC_REALM}/users/{id}/role-mappings/realm/composite"
 
 server:
   port: ${SERVER_PORT}

@@ -15,4 +15,6 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
     @Query("SELECT g FROM Group g LEFT JOIN FETCH g.course WHERE g.id = :id")
     Optional<Group> findByIdWithCourse(@Param("id") Long id);
+
+    List<Group> findByEmployeeSub(String employeeSub);
 }

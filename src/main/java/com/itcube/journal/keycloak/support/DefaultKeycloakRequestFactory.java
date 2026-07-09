@@ -23,6 +23,15 @@ public class DefaultKeycloakRequestFactory implements KeycloakRequestFactory {
     @Value("${external.keycloak.introspect-endpoint}")
     private String keycloakIntrospectEndpoint;
 
+    @Value("${external.keycloak.admin.users-by-role-endpoint}")
+    private String keycloakAdminUsersByRoleEndpoint;
+
+    @Value("${external.keycloak.admin.user-by-id-endpoint}")
+    private String keycloakAdminUserByIdEndpoint;
+
+    @Value("${external.keycloak.admin.user-role-mappings-endpoint}")
+    private String keycloakAdminUserRoleMappingsEndpoint;
+
     private final KeycloakProperties keycloakProperties;
 
     @Override
@@ -64,6 +73,17 @@ public class DefaultKeycloakRequestFactory implements KeycloakRequestFactory {
     }
 
     @Override
+    public MultiValueMap<String, String> buildClientCredentialsForm() {
+        MultiValueMap<String, String> form = new LinkedMultiValueMap<>();
+
+        form.add("grant_type", "client_credentials");
+        form.add("client_id", keycloakProperties.getClientId());
+        form.add("client_secret", keycloakProperties.getClientSecret());
+
+        return form;
+    }
+
+    @Override
     public String tokenEndpoint() {
         return keycloakTokenEndpoint;
     }
@@ -76,6 +96,21 @@ public class DefaultKeycloakRequestFactory implements KeycloakRequestFactory {
     @Override
     public String revokeEndpoint() {
         return keycloakRevokeEndpoint;
+    }
+
+    @Override
+    public String adminUsersByRoleEndpoint() {
+        return keycloakAdminUsersByRoleEndpoint;
+    }
+
+    @Override
+    public String adminUserByIdEndpoint() {
+        return keycloakAdminUserByIdEndpoint;
+    }
+
+    @Override
+    public String adminUserRoleMappingsEndpoint() {
+        return keycloakAdminUserRoleMappingsEndpoint;
     }
 
 }

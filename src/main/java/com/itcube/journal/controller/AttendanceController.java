@@ -7,6 +7,7 @@ import com.itcube.journal.dto.journal.JournalResponseDTO;
 import com.itcube.journal.service.AttendanceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -27,37 +28,44 @@ public class AttendanceController {
     private final AttendanceService attendanceService;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('methodist', 'admin')")
     public ResponseEntity<List<AttendanceResponseDTO>> getAllAttendances() {
         return ResponseEntity.ok(attendanceService.findAllAttendances());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('journal.attendance_viewer')")
     public ResponseEntity<AttendanceResponseDTO> getAttendanceById(@PathVariable Long id) {
         return ResponseEntity.ok(attendanceService.findAttendanceById(id));
     }
 
     @GetMapping("/student/{studentId}")
+    @PreAuthorize("hasRole('journal.attendance_viewer')")
     public ResponseEntity<List<AttendanceResponseDTO>> getAttendancesByStudentId(@PathVariable Long studentId) {
         return ResponseEntity.ok(attendanceService.findAttendancesByStudentId(studentId));
     }
 
     @GetMapping("/group/{groupId}")
+    @PreAuthorize("hasRole('journal.attendance_viewer')")
     public ResponseEntity<List<AttendanceResponseDTO>> getAttendancesByGroupId(@PathVariable Long groupId) {
         return ResponseEntity.ok(attendanceService.findAttendancesByGroupId(groupId));
     }
 
     @GetMapping("/group/{groupId}/journal")
+    @PreAuthorize("hasRole('journal.attendance_viewer')")
     public ResponseEntity<JournalResponseDTO> getGroupJournal(@PathVariable Long groupId) {
         return ResponseEntity.ok(attendanceService.getGroupJournal(groupId));
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('methodist', 'admin')")
     public ResponseEntity<AttendanceResponseDTO> createAttendance(
             @RequestBody AttendanceRequestDTO attendanceRequestDTO) {
         return ResponseEntity.ok(attendanceService.createAttendance(attendanceRequestDTO));
     }
 
     @PatchMapping("/{id}")
+    @PreAuthorize("hasAnyRole('methodist', 'admin')")
     public ResponseEntity<AttendanceResponseDTO> updateAttendance(
             @PathVariable Long id,
             @RequestBody AttendanceRequestDTO attendanceRequestDTO) {
@@ -65,12 +73,14 @@ public class AttendanceController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('journal.attendance_editor')")
     public ResponseEntity<Void> deleteAttendance(@PathVariable Long id) {
         attendanceService.deleteAttendance(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/student/{studentId}/mark")
+    @PreAuthorize("hasRole('journal.attendance_editor')")
     public ResponseEntity<AttendanceResponseDTO> setMark(
             @PathVariable Long studentId,
             @RequestBody AttendanceMarkRequestDTO attendanceMarkRequestDTO) {

@@ -7,5 +7,5 @@ public record GroupResponseDTO(Long id, String name,
                                Integer decreeNumber, LocalDateTime decreeDate,
                                String educationForm,
                                Long courseId, String courseName,
-                               Integer studentCount) {
+                               Integer studentCount, String employeeSub) {
 }
